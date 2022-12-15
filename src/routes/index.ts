@@ -1,8 +1,8 @@
 import express from "express";
-import entryOrders from "../api_modules/entry_order/routes"
+import Documents from "../api_modules/documents/routes"
 
 const router = express.Router()
 
-router.use('/api/entry-order', entryOrders)
+router.use('/api/documents', Documents)
 
 export default router

@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
-import { EntryOrder } from '../api_modules/entry_order/model';
+import { EntryOrder } from '../api_modules/entry-orders/model';
+import { Document } from '../api_modules/documents/model';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -8,7 +9,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
   database: process.env.DB_NAME,
-  entities: [EntryOrder],
+  entities: [Document, EntryOrder],
   //logging: true, //Show in console SQL commands
   synchronize: true //Read the entities and recreate them
 });
