@@ -9,5 +9,6 @@ export const AppDataSource = new DataSource({
   port: Number(process.env.DB_PORT),
   database: process.env.DB_NAME,
   entities: [EntryOrder],
-  logging: true, //Show in console SQL commands
+  //logging: true, //Show in console SQL commands
+  synchronize: true //Read the entities and recreate them
 });
