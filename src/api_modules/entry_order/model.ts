@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -13,7 +14,7 @@ enum OrderPriority {
 }
 
 @Entity()
-export class EntryOrder {
+export class EntryOrder extends BaseEntity{
   @PrimaryGeneratedColumn('uuid') //PK
   id: string
 
