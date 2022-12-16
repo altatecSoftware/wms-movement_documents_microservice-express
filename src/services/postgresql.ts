@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { EntryOrder } from '../api_modules/entry-orders/model';
+import { EntryOrder } from '../api_modules/orders/model';
 import { Document } from '../api_modules/documents/model';
 
 export const AppDataSource = new DataSource({

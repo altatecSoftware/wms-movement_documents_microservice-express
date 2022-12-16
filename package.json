@@ -21,6 +21,7 @@
   },
   "homepage": "https://gitlab.com/cmms-2020/wms/wmapache/wmapache-document_movements_microservice-express#readme",
   "dependencies": {
+    "amqplib": "^0.10.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

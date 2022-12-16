@@ -1,12 +1,20 @@
-import { Router } from 'express'
+import { Router } from 'express';
+import {
+  createDocument,
+  getAllDocuments,
+  getDocumentById,
+  getAllDocumentsByType,
+  updateDocument,
+  deleteDocument
+} from './controller';
 
-const router = Router()
+const router = Router();
 
-router.get('/', (req, res) => res.send('List of all documents!!'))
-router.get('/type/:type', (req, res) => res.send('List of documents by type: ' + req.params.type))
-router.get('/:id', (req, res) => res.send('Document found: ' + req.params.id))
-router.post('/:type', (req, res) => res.send(req.params.type + ' Document Created!!'))
-router.put('/:id', (req, res) => res.send('Document updated: ' + req.params.id))
-router.delete('/:id', (req, res) => res.send('Document deleted: ' + req.params.id))
+router.get('/', getAllDocuments);
+router.get('/type/:orderType', getAllDocumentsByType);
+router.get('/:id', getDocumentById);
+router.post('/:orderType', createDocument);
+router.put('/:id', updateDocument);
+router.delete('/:id', deleteDocument);
 
-export default router
+export default router;

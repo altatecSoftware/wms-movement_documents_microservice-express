@@ -8,10 +8,16 @@ import {
 } from 'typeorm';
 
 enum orderTypes {
-  ENTRY = 'entry',
-  EXIT = 'exit',
-  PURCHASE = 'purshase',
-  SALE = 'sale',
+  ENTRY = 'entry_order',
+  EXIT = 'exit_order',
+  PURCHASE = 'purshase_order',
+  SALE = 'sale_order',
+}
+
+enum statusProgress {
+  PENDING = "pending",
+  CREATED = "created", 
+  DELETED = "deleted"
 }
 
 @Entity()
@@ -27,7 +33,14 @@ export class Document extends BaseEntity {
     enum: orderTypes,
     nullable: false,
   })
-  status: orderTypes;
+  type: orderTypes;
+
+  @Column({
+    type: 'enum',
+    enum: statusProgress,
+    nullable: false,
+  })
+  status: statusProgress;
 
   @Column({ nullable: false })
   order_code: string;
