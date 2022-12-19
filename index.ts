@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import app from "./src/app"
-import { AppDataSource } from "./src/services/postgresql"
-import { amqpConnection } from "./src/services/rabbitmq"
+import { AppDataSource } from "./src/config/postgresql"
+import { amqpConnection } from "./src/config/rabbitmq"
 
 const main = async () => {
   const port = process.env.SERVER_PORT ?? 3000

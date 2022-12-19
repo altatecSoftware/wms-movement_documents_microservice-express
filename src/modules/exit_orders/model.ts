@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 
 @Entity()
-export class EntryOrder extends BaseEntity{
+export class ExitOrder extends BaseEntity{
   @PrimaryGeneratedColumn('uuid') 
   public id: string
 
