@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
-import { EntryOrder } from '../api_modules/orders/model';
-import { Document } from '../api_modules/documents/model';
+import { EntryOrder } from '../modules/entry_orders/model';
+import { Document } from '../modules/documents/model';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST,
+  host: process.env.DB_HOSTNAME,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
