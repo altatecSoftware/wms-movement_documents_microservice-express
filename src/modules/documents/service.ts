@@ -1,6 +1,3 @@
-import { Document } from "./model";
-import { knowTypeDocument } from "./helpers/document-types";
-import { documentTypes } from "./utils/document-types";
 
 const getAllDocuments = (content) => {
   console.log(`Received message from getAllDocuments`);
@@ -18,8 +15,8 @@ const getDocumentById = (content) => {
 };
 
 const createDocument = async (content) => {
-  const type = await knowTypeDocument(content)
-  console.log(type)
+  console.log(`Received message from createDocument`);
+  console.log(content);
 };
 
 const updateDocument = (content) => {

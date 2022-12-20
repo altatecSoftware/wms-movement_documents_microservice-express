@@ -1,6 +1,5 @@
 import { documentTypes } from "../utils/document-types"
 
-//NOTE: ERROR HANDLING JSON.parse(content)
 export const knowTypeDocument = (content) => {
     const { document_type } = JSON.parse(content)
     let type = ''
