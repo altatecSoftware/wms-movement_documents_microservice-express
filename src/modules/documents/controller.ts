@@ -1,31 +1,34 @@
-const getAllDocuments = (queue, content) => {
-  console.log(`Received message from  ${queue} queue from getAllDocuments`);
-  console.log(content);
+import * as Service from './service';
+
+const getAllDocuments = (rabbitmq) => {
+  const response = Service.getAllDocuments(rabbitmq.content);
 };
 
-const getAllDocumentsByType = (queue, content) => {
-  console.log(`Received message from  ${queue} queue from getAllDocumentsByType`);
-  console.log(content);
+const getAllDocumentsByType = (rabbitmq) => {
+  const response = Service.getAllDocumentsByType(rabbitmq.content);
 };
 
-const getDocumentById = (queue, content) => {
-  console.log(`Received message from  ${queue} queue from getDocumentById`);
-  console.log(content);
+const getDocumentById = (rabbitmq) => {
+  const response = Service.getDocumentById(rabbitmq.content);
 };
 
-const createDocument = (queue, content) => {
-  console.log(`Received message from  ${queue} queue from createDocument`);
-  console.log(content);
+const createDocument = async(rabbitmq) => {
+  const response = Service.createDocument(rabbitmq.content);
+
+//   rabbitmq.channel.sendToQueue(rabbitmq.queue, Buffer.from(
+//     JSON.stringify("Documento Creado")
+// ),{ 
+//     persistent: true
+// })
+  
 };
 
-const updateDocument = (queue, content) => {
-  console.log(`Received message from  ${queue} queue from updateDocument`);
-  console.log(content);
+const updateDocument = (rabbitmq) => {
+  const response = Service.updateDocument(rabbitmq.content);
 };
 
-const deleteDocument = (queue, content) => {
-  console.log(`Received message from  ${queue} queue from deleteDocument`);
-  console.log(content);
+const deleteDocument = (rabbitmq) => {
+  const response = Service.deleteDocument(rabbitmq.content);
 };
 
 export {

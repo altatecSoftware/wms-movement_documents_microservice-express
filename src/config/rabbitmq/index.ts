@@ -21,7 +21,10 @@ const amqpConnection = async() => {
         if(message){
             let content = message.content.toString()
 
-            redirectQueuesByRequest(key, value, content)
+            const rabbitmq = {
+              key, value, content, channel
+            }
+            redirectQueuesByRequest(rabbitmq)
             channel.ack( message ) //message processed and removed  
         }
       })
