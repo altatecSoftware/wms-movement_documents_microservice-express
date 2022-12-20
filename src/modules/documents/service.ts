@@ -17,8 +17,8 @@ const getDocumentById = (content) => {
   console.log(content);
 };
 
-const createDocument = (content) => {
-  const type = knowTypeDocument(content)
+const createDocument = async (content) => {
+  const type = await knowTypeDocument(content)
   console.log(type)
 };
 
