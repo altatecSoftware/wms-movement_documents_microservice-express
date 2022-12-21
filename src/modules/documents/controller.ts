@@ -1,30 +1,36 @@
-import * as Service from './service';
-import { knowTypeDocument } from './helpers/document-types';
-import { documentTypes } from './utils/document-types';
+import * as ServiceDocument from './service';
+import { responseMessage } from './helpers/response-messages';
+import {documentResponseQueues} from '../../config/rabbitmq/queues';
 
 const getAllDocuments = (rabbitmq) => {
-  const response = Service.getAllDocuments(rabbitmq.content);
+  const response = ServiceDocument.getAllDocuments(rabbitmq.content);
 };
 
 const getAllDocumentsByType = (rabbitmq) => {
-  const response = Service.getAllDocumentsByType(rabbitmq.content);
+  const response = ServiceDocument.getAllDocumentsByType(rabbitmq.content);
 };
 
 const getDocumentById = (rabbitmq) => {
-  const response = Service.getDocumentById(rabbitmq.content);
+  const response = ServiceDocument.getDocumentById(rabbitmq.content);
 };
 
 const createDocument = (rabbitmq) => {
-  const type = knowTypeDocument(rabbitmq.content)
-  console.log(type)  
+  const { document_type, data } = JSON.parse(rabbitmq.content)
+  if(!document_type || !data){
+    responseMessage(rabbitmq.channel, documentResponseQueues.errorMessage, "Error de formato")
+  } else {
+    responseMessage(rabbitmq.channel, documentResponseQueues.responseMessage, "Todo bien")
+  }
+  
+  //documentTypes.entryOder === document_type ? ServiceDocument.createDocument(rabbitmq.content) : ""
 };
 
 const updateDocument = (rabbitmq) => {
-  const response = Service.updateDocument(rabbitmq.content);
+  const response = ServiceDocument.updateDocument(rabbitmq.content);
 };
 
 const deleteDocument = (rabbitmq) => {
-  const response = Service.deleteDocument(rabbitmq.content);
+  const response = ServiceDocument.deleteDocument(rabbitmq.content);
 };
 
 export {

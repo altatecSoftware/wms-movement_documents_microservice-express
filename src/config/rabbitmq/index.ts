@@ -2,7 +2,7 @@ import amqp, {Connection, Channel} from "amqplib"
 //Dotenv 
 import * as dotenv from 'dotenv'
 dotenv.config()
-import documentQueues from "./queues"
+import { documentRequestQueues } from "./queues"
 import { redirectQueuesByRequest } from '../../routes/index';
 
 const amqp_hostname:any = process.env.AMQP_HOSTNAME
@@ -13,7 +13,7 @@ const amqpConnection = async() => {
     connection = await amqp.connect(amqpServer)
     channel = await connection.createChannel()
 
-    Object.entries(documentQueues).forEach( async([key, value]) => {
+    Object.entries(documentRequestQueues).forEach( async([key, value]) => {
       //Method used to verify if the name of the queue exists, otherwise it creates it
       await channel.assertQueue(value)
 
@@ -22,9 +22,10 @@ const amqpConnection = async() => {
             let content = message.content.toString()
 
             const rabbitmq = {
-              key, value, content, channel
+              queue: value, content, channel
             }
             redirectQueuesByRequest(rabbitmq)
+            
             channel.ack( message ) //message processed and removed  
         }
       })

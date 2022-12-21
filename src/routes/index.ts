@@ -6,26 +6,26 @@ import {
   getDocumentById,
   updateDocument,
 } from '../modules/documents/controller';
-import documentQueues from '../config/rabbitmq/queues';
+import {documentRequestQueues} from '../config/rabbitmq/queues';
 
-export const redirectQueuesByRequest = (rabbitmq) => {
-  switch (rabbitmq.value) {
-    case documentQueues.getAllDocuments:
+export const redirectQueuesByRequest = ({queue, ...rabbitmq}) => {
+  switch (queue) {
+    case documentRequestQueues.getAllDocuments:
       getAllDocuments(rabbitmq);
       break;
-    case documentQueues.getAllDocumentsByType:
+    case documentRequestQueues.getAllDocumentsByType:
       getAllDocumentsByType(rabbitmq);
       break;
-    case documentQueues.getDocumentById:
+    case documentRequestQueues.getDocumentById:
       getDocumentById(rabbitmq);
       break;
-    case documentQueues.createDocument:
+    case documentRequestQueues.createDocument:
       createDocument(rabbitmq);
       break;
-    case documentQueues.updateDocument:
+    case documentRequestQueues.updateDocument:
       updateDocument(rabbitmq);
       break;
-    case documentQueues.deleteDocument:
+    case documentRequestQueues.deleteDocument:
       deleteDocument(rabbitmq);
       break;
   }
