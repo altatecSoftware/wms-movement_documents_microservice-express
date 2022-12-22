@@ -1,6 +1,9 @@
 import * as ServiceDocument from './service';
+import * as ServiceEntryOrder from '../entry_orders/service';
+import * as ServiceExitOrder from '../exit_orders/service';
 import { responseMessage } from './helpers/response-messages';
-import {documentResponseQueues} from '../../config/rabbitmq/queues';
+import { documentResponseQueues } from '../../config/rabbitmq/queues';
+import { requestFormatError, documentTypes, invalidDocumentError } from './utils/index';
 
 const getAllDocuments = (rabbitmq) => {
   const response = ServiceDocument.getAllDocuments(rabbitmq.content);
@@ -15,14 +18,31 @@ const getDocumentById = (rabbitmq) => {
 };
 
 const createDocument = (rabbitmq) => {
-  const { document_type, data } = JSON.parse(rabbitmq.content)
-  if(!document_type || !data){
-    responseMessage(rabbitmq.channel, documentResponseQueues.errorMessage, "Error de formato")
-  } else {
-    responseMessage(rabbitmq.channel, documentResponseQueues.responseMessage, "Todo bien")
+  const { document_type, document } = JSON.parse(rabbitmq.content);
+  if (!document_type || !document) {
+    responseMessage(
+      rabbitmq.channel,
+      documentResponseQueues.errorMessage,
+      requestFormatError
+    );
+    return;
   }
-  
-  //documentTypes.entryOder === document_type ? ServiceDocument.createDocument(rabbitmq.content) : ""
+
+  switch (document_type) {
+    case documentTypes.entryOder:
+      ServiceEntryOrder.createEntryOrder(document)
+      break;
+    case documentTypes.exitOrder:
+      ServiceExitOrder.createExitOrder(document)
+      break;
+    default:
+      responseMessage(
+        rabbitmq.channel,
+        documentResponseQueues.errorMessage,
+        invalidDocumentError
+      );
+      break;
+  }
 };
 
 const updateDocument = (rabbitmq) => {
