@@ -1,5 +1,7 @@
-const createEntryOrder = async (content) => {
-  console.log("Entry Order")
+const createEntryOrder = async (document) => {
+  const { destination_warehouse, delivered_by, received_by } = document
+  
+
 };
 
 export {

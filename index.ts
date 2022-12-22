@@ -1,12 +1,12 @@
 import "reflect-metadata"
 import app from "./src/app"
-import { AppDataSource } from "./src/config/postgresql"
+import { PostgresDataSource  } from "./src/config/postgresql"
 import { amqpConnection } from "./src/config/rabbitmq"
 
 const main = async () => {
   const port = process.env.SERVER_PORT ?? 3000
   try {
-    await AppDataSource.initialize()
+    await PostgresDataSource.initialize()
     console.log('PostgreSQL Database connected')
     await amqpConnection()
     console.log('RabbitMq connected')
