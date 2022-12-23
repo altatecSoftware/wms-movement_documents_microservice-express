@@ -18,7 +18,7 @@ const getDocumentById = (rabbitmq) => {
 };
 
 const createDocument = (rabbitmq) => {
-  const { document_type, document } = JSON.parse(rabbitmq.content);
+  const { document_type, document, channel } = JSON.parse(rabbitmq.content);
   if (!document_type || !document) {
     responseMessage(
       rabbitmq.channel,
@@ -28,21 +28,8 @@ const createDocument = (rabbitmq) => {
     return;
   }
 
-  switch (document_type) {
-    case documentTypes.entryOder:
-      ServiceEntryOrder.createEntryOrder(document)
-      break;
-    case documentTypes.exitOrder:
-      ServiceExitOrder.createExitOrder(document)
-      break;
-    default:
-      responseMessage(
-        rabbitmq.channel,
-        documentResponseQueues.errorMessage,
-        invalidDocumentError
-      );
-      break;
-  }
+  _selectServiceByDocumentType(document_type, document, channel)
+
 };
 
 const updateDocument = (rabbitmq) => {
@@ -52,6 +39,26 @@ const updateDocument = (rabbitmq) => {
 const deleteDocument = (rabbitmq) => {
   const response = ServiceDocument.deleteDocument(rabbitmq.content);
 };
+
+const _selectServiceByDocumentType = async (document_type, document, channel) => {
+  switch (document_type) {
+    case documentTypes.entryOder:
+      const entryOrderId = await ServiceEntryOrder.createEntryOrder(document)
+      ServiceDocument.createDocument(document, entryOrderId, document_type)
+      break;
+    case documentTypes.exitOrder:
+      const exitOrderId = await ServiceExitOrder.createExitOrder(document)
+      ServiceDocument.createDocument(document, exitOrderId, document_type)
+      break;
+    default:
+      responseMessage(
+        channel,
+        documentResponseQueues.errorMessage,
+        invalidDocumentError
+      );
+      break;
+  }
+}
 
 export {
   getAllDocuments,

@@ -38,16 +38,16 @@ export class Document extends BaseEntity {
     enum: orderTypes,
     nullable: false,
   })
-  public type: orderTypes;
+  public document_type: orderTypes;
 
   @Column({
     type: 'enum',
     enum: statusProgress,
-    nullable: false,
+    default: 'pending',
   })
   public status: statusProgress;
 
-  @Column({nullable: false})
+  @Column()
   public warehouse_manager: string
 
   @Column({nullable: false})
@@ -56,6 +56,7 @@ export class Document extends BaseEntity {
   @Column({
     type: 'enum',
     enum: orderPriority,
+    default: 'baja',
     nullable: false,
   })
   public priority: orderPriority;
@@ -79,7 +80,7 @@ export class Document extends BaseEntity {
   public order_code: string;
 
   @Column({ nullable: false })
-  public Observations: string;
+  public Observation: string;
 
   @Column({ nullable: false })
   public vehicle: string;
