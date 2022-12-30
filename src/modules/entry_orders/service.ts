@@ -1,4 +1,4 @@
-import { PostgresDataSource } from '../../config/postgresql';
+import { PostgresDataSource } from '../../database/postgresql';
 import { EntryOrder } from './model';
 const entryOrderRepository = PostgresDataSource.getRepository(EntryOrder);
 

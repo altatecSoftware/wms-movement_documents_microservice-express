@@ -1,4 +1,4 @@
-import { PostgresDataSource } from "../../config/postgresql";
+import { PostgresDataSource } from "../../database/postgresql";
 import { Document } from "./model";
 const documentRepository = PostgresDataSource.getRepository(Document);
 

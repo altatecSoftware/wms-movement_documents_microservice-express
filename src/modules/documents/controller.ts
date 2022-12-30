@@ -2,23 +2,26 @@ import * as ServiceDocument from './service';
 import * as ServiceEntryOrder from '../entry_orders/service';
 import * as ServiceExitOrder from '../exit_orders/service';
 import { responseMessage } from './helpers/response-messages';
-import { documentResponseQueues } from '../../config/rabbitmq/queues';
-import { requestFormatError, documentTypes, invalidDocumentError } from './utils/index';
+import {
+  requestFormatError,
+  documentTypes,
+  invalidDocumentError,
+} from './utils/index';
 
-const getAllDocuments = (rabbitmq) => {
-  const response = ServiceDocument.getAllDocuments(rabbitmq.content);
+const getAllDocuments = (content) => {
+  //const response = ServiceDocument.getAllDocuments(rabbitmq.content);
 };
 
-const getAllDocumentsByType = (rabbitmq) => {
-  const response = ServiceDocument.getAllDocumentsByType(rabbitmq.content);
+const getAllDocumentsByType = (content) => {
+  //const response = ServiceDocument.getAllDocumentsByType(rabbitmq.content);
 };
 
-const getDocumentById = (rabbitmq) => {
-  const response = ServiceDocument.getDocumentById(rabbitmq.content);
+const getDocumentById = (content) => {
+  //const response = ServiceDocument.getDocumentById(rabbitmq.content);
 };
 
-const createDocument = (rabbitmq) => {
-  const { document_type, document, channel } = JSON.parse(rabbitmq.content);
+const createDocument = (content) => {
+  /* const { document_type, document, channel } = JSON.parse(rabbitmq.content);
   if (!document_type || !document) {
     responseMessage(
       rabbitmq.channel,
@@ -28,19 +31,19 @@ const createDocument = (rabbitmq) => {
     return;
   }
 
-  _selectServiceByDocumentType(document_type, document, channel)
+  _selectServiceByDocumentType(document_type, document, channel)*/
 
 };
 
-const updateDocument = (rabbitmq) => {
-  const response = ServiceDocument.updateDocument(rabbitmq.content);
+const updateDocument = (content) => {
+  //const response = ServiceDocument.updateDocument(rabbitmq.content);
 };
 
-const deleteDocument = (rabbitmq) => {
-  const response = ServiceDocument.deleteDocument(rabbitmq.content);
+const deleteDocument = (content) => {
+  //const response = ServiceDocument.deleteDocument(rabbitmq.content);
 };
 
-const _selectServiceByDocumentType = async (document_type, document, channel) => {
+/*const _selectServiceByDocumentType = async (document_type, document, channel) => {
   switch (document_type) {
     case documentTypes.entryOder:
       const entryOrderId = await ServiceEntryOrder.createEntryOrder(document)
@@ -58,7 +61,7 @@ const _selectServiceByDocumentType = async (document_type, document, channel) =>
       );
       break;
   }
-}
+}*/
 
 export {
   getAllDocuments,
