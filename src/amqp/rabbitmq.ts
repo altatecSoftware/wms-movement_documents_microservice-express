@@ -1,4 +1,5 @@
 import amqp, { Connection, Channel } from 'amqplib';
+import { container } from '../container';
 
 export class RabbitMQ {
   private amqp_hostname: any;
@@ -24,11 +25,11 @@ export class RabbitMQ {
 
   public async amqpConsumer() {
     await this.channel.assertQueue(this.queue);
-    await this.channel.consume(this.queue, (message) => {
-      if (message) {
-        this.content = JSON.parse(message.content.toString());
-        this.channel.ack(message);
-      }
+    console.log('RabbitMQ consumer waiting for message');
+    await this.channel.consume(this.queue, (message: any) => {
+      this.content = JSON.parse(message.content.toString());
+      this.channel.ack(message);
+      container.cradle.routes.redirectRequest(this.content);
     });
   }
 

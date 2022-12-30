@@ -39,7 +39,7 @@ export class PostreSQL {
 
     PostgresDataSource.initialize()
       .then(() => {
-        console.log('Postgres DataSource has been initialized!');
+        console.log('Postgres DataSource has been initialized');
       })
       .catch((err) => {
         console.error('Error during Data Source initialization', err);

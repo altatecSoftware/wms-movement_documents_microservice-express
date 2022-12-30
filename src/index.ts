@@ -4,6 +4,7 @@ const main = async () => {
   try {
     container.cradle.server.start();
     await container.cradle.rabbitmq.amqpConnection();
+    await container.cradle.rabbitmq.amqpConsumer();
     await container.cradle.postgres.connection();
   } catch (error) {
     console.log(error);

@@ -21,6 +21,7 @@ const getDocumentById = (content) => {
 };
 
 const createDocument = (content) => {
+  console.log(content);
   /* const { document_type, document, channel } = JSON.parse(rabbitmq.content);
   if (!document_type || !document) {
     responseMessage(
@@ -32,7 +33,6 @@ const createDocument = (content) => {
   }
 
   _selectServiceByDocumentType(document_type, document, channel)*/
-
 };
 
 const updateDocument = (content) => {

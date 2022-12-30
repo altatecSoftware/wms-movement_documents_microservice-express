@@ -14,7 +14,10 @@ export class Server {
     this.setup();
   }
 
-  private setup() {}
+  private setup() {
+    //Error Messages
+    //Response Message
+  }
 
   public start() {
     this.server = this.app.listen(this.port, () => {
