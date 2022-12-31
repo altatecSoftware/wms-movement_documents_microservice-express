@@ -2,7 +2,9 @@ import express from 'express';
 //Dotenv configuration
 import * as dotenv from 'dotenv';
 dotenv.config();
+import { containerSetup } from './container';
 
+containerSetup();
 export class Server {
   private app: any;
   private server: any;
@@ -11,12 +13,6 @@ export class Server {
   constructor() {
     this.app = express();
     this.port = process.env.SERVER_PORT ?? 8080;
-    this.setup();
-  }
-
-  private setup() {
-    //Error Messages
-    //Response Message
   }
 
   public start() {

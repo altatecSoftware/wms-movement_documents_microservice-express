@@ -1,5 +1,5 @@
 import amqp, { Connection, Channel } from 'amqplib';
-import { container } from '../container';
+import { Route } from '../routes/index';
 
 export class RabbitMQ {
   private amqp_hostname: any;
@@ -8,7 +8,6 @@ export class RabbitMQ {
   private content: any;
   private connection: Connection;
   private channel: Channel;
-  private static _instance: RabbitMQ;
 
   constructor() {
     this.amqp_hostname = process.env.AMQP_HOSTNAME;
@@ -29,11 +28,12 @@ export class RabbitMQ {
     await this.channel.consume(this.queue, (message: any) => {
       this.content = JSON.parse(message.content.toString());
       this.channel.ack(message);
-      container.cradle.routes.redirectRequest(this.content);
+      const route = new Route();
+      route.redirectRequest(this.content);
     });
   }
 
-  public async amqpProvider(response) {
+  public async amqpProvider(response: any) {
     await this.channel.assertQueue(this.queue);
     this.channel.sendToQueue(
       this.content.properties.replyTo,
@@ -41,15 +41,7 @@ export class RabbitMQ {
     );
   }
 
-  public get amqpContent(): string {
+  public get amqpContent(): object {
     return this.content;
-  }
-
-  public static amqpGetInstance() {
-    if (this._instance) {
-      return this._instance;
-    }
-    this._instance = new RabbitMQ();
-    return this._instance;
   }
 }

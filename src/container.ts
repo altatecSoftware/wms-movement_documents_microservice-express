@@ -1,19 +1,22 @@
 import { createContainer, asClass, InjectionMode, Lifetime } from 'awilix';
 import { PostreSQL } from './database/postgresql';
 import { RabbitMQ } from './amqp/rabbitmq';
-import { Server } from './server';
-import { Route } from './routes';
+import { documentController } from './modules/documents/controller';
 
 const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
 });
 
-container.register({
-  //Config
-  postgres: asClass(PostreSQL, { lifetime: Lifetime.SINGLETON }),
-  rabbitmq: asClass(RabbitMQ, { lifetime: Lifetime.SINGLETON }),
-  routes: asClass(Route),
-  server: asClass(Server),
-});
+const containerSetup = () => {
+  container.register({
+    //Config
+    postgres: asClass(PostreSQL, { lifetime: Lifetime.SINGLETON }),
+    rabbitmq: asClass(RabbitMQ, { lifetime: Lifetime.SINGLETON }),
+    //Document Module
+    documentController: asClass(documentController),
+    //Entry Order Module
+    //Exit Order Module
+  });
+};
 
-export { container };
+export { container, containerSetup };

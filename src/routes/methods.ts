@@ -1,17 +1,11 @@
-import {
-  createDocument,
-  deleteDocument,
-  getAllDocuments,
-  getAllDocumentsByType,
-  getDocumentById,
-  updateDocument,
-} from '../modules/documents/controller';
+import { documentController } from '../modules/documents/controller';
+const document = new documentController();
 
 export const methods = {
-  read: getAllDocuments,
-  readByType: getAllDocumentsByType,
-  readById: getDocumentById,
-  create: createDocument,
-  update: updateDocument,
-  delete: deleteDocument,
+  read: document.getAllDocuments,
+  readByType: document.getAllDocumentsByType,
+  readById: document.getDocumentById,
+  create: document.createDocument,
+  update: document.updateDocument,
+  delete: document.deleteDocument,
 };

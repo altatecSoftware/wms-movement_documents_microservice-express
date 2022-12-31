@@ -1,11 +1,13 @@
 import { container } from './container';
+import { Server } from './server';
 
 const main = async () => {
   try {
-    container.cradle.server.start();
+    const server = new Server();
+    server.start();
+    await container.cradle.postgres.connection();
     await container.cradle.rabbitmq.amqpConnection();
     await container.cradle.rabbitmq.amqpConsumer();
-    await container.cradle.postgres.connection();
   } catch (error) {
     console.log(error);
   }
