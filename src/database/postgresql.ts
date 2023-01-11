@@ -12,6 +12,7 @@ export class PostreSQL {
   private database: any;
   private entities: any;
   private synchronize: any;
+  private postgresDataSource: any;
 
   constructor() {
     this.type = 'postgres';
@@ -25,7 +26,7 @@ export class PostreSQL {
   }
 
   public connection() {
-    const PostgresDataSource = new DataSource({
+    this.postgresDataSource = new DataSource({
       type: this.type,
       host: this.host,
       username: this.username,
@@ -37,12 +38,16 @@ export class PostreSQL {
       synchronize: this.synchronize, //Read the entities and recreate them
     });
 
-    PostgresDataSource.initialize()
+    this.postgresDataSource.initialize()
       .then(() => {
         console.log('Postgres DataSource has been initialized');
       })
       .catch((err) => {
         console.error('Error during Data Source initialization', err);
       });
+  }
+
+  public getPostgresDataSource(){
+    return this.postgresDataSource
   }
 }

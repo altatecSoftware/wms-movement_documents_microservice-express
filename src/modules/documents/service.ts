@@ -1,6 +1,7 @@
-import { PostgresDataSource } from "../../database/postgresql";
+import { PostreSQL } from "../../database/postgresql";
 import { Document } from "./model";
-const documentRepository = PostgresDataSource.getRepository(Document);
+const postgres = new PostreSQL()
+const documentRepository = postgres.getPostgresDataSource().getRepository(Document);
 
 const getAllDocuments = (content) => {
   console.log(`Received message from getAllDocuments`);

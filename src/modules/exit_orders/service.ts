@@ -1,6 +1,7 @@
-import { PostgresDataSource } from '../../database/postgresql';
+import { PostreSQL } from '../../database/postgresql';
 import { ExitOrder } from './model';
-const exitOrderRepository = PostgresDataSource.getRepository(ExitOrder);
+const postgres = new PostreSQL()
+const exitOrderRepository = postgres.getPostgresDataSource().getRepository(ExitOrder);
 
 const createExitOrder = async (content) => {
   try {

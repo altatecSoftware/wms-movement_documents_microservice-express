@@ -1,6 +1,7 @@
-import { PostgresDataSource } from '../../database/postgresql';
+import { PostreSQL } from '../../database/postgresql';
 import { EntryOrder } from './model';
-const entryOrderRepository = PostgresDataSource.getRepository(EntryOrder);
+const postgres = new PostreSQL()
+const entryOrderRepository = postgres.getPostgresDataSource().getRepository(EntryOrder);
 
 const createEntryOrder = async (content) => {
   try {
