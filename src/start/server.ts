@@ -5,10 +5,12 @@ export default class Server {
   private _expressApp: Application;
   private _config: any;
   private _amqp: any; 
+  private _postgresql: any
 
-  constructor({config, router, amqp}: any) {
+  constructor({config, router, amqp, postgresql}: any) {
     this._config = config;
     this._amqp = amqp;
+    this._postgresql = postgresql
     this._expressApp = express();
     this._expressApp.use(morgan('tiny'));
     this._expressApp.use(router);
@@ -20,5 +22,6 @@ export default class Server {
     })
 
     await this._amqp.amqpConnection();
+    await this._postgresql.connection();
   }
 }

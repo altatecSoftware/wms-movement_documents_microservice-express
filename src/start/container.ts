@@ -4,6 +4,7 @@ import Server from './server';
 import Config from '../config';
 import RabbitMQ from '../amqp';
 import Routes from '../routes/router';
+import PostreSQL from '../database/postgresql';
 //Controllers
 
 //Services
@@ -20,6 +21,7 @@ container.register({
   amqp: asClass(RabbitMQ).singleton(),
   router: asFunction(Routes).singleton(),
   config: asValue(Config), 
+  postgresql: asClass(PostreSQL).singleton()
 })
 
 export default container;
