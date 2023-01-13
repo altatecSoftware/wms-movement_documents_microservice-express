@@ -1,4 +1,4 @@
-import { PostreSQL } from '../../database/postgresql';
+import PostreSQL from '../../database/postgresql';
 import { ExitOrder } from './model';
 const postgres = new PostreSQL()
 const exitOrderRepository = postgres.getPostgresDataSource().getRepository(ExitOrder);

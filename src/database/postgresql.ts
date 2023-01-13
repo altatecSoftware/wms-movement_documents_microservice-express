@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { EntryOrder as EntryOrders } from '../modules/entry_orders/model';
 import { Document as Documents } from '../modules/documents/model';
-import { ExitOrder as ExitOrders } from '../modules/exit_orders/model';
+import { ExitOrder as ExitOrders } from '../modules/departure_orders/model';
 
 export default class PostreSQL {
   private _entities: any;

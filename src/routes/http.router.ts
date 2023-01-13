@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express'
-import cors from 'cors'
 
 const Routes = () => {
     const router = express.Router()
