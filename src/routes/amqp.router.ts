@@ -1,4 +1,4 @@
-import { DocumentMethods } from "../utils";
+import { Methods } from "../utils";
 
 export default class AmqpRouter {
   private _method: any;
@@ -6,14 +6,18 @@ export default class AmqpRouter {
   private _content: any;
 
   constructor() {
-    this._methods = {...DocumentMethods};
+    this._methods = Methods
   }
 
   public redirectRequest(content: any) {
-    this._content = content;
-    this._method = this._methods[content.method];
-    this._method
-      ? this._method(this._content)
-      : console.log('invalid request in method');
+    if (content.entity === "document") {
+      this._content = content;
+      this._method = this._methods[content.entity][content.method];
+      this._method
+        ? this._method(this._content)
+        : console.log('invalid request in method');
+        return
+    }
+    console.log('invalid entity')
   }
 }

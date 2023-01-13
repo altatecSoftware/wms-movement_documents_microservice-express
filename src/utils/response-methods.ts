@@ -1,27 +1,23 @@
 import DocumentController from "../modules/documents/controller";
 const document = new DocumentController();
 
-const DocumentMethods = {
-  read: document.getAllDocuments,
-  readByType: document.getAllDocumentsByType,
-  readById: document.getDocumentById,
-  create: document.createDocument,
-  update: document.updateDocument,
-  delete: document.deleteDocument,
+export const Methods = {
+  document: {
+    read: document.getAllDocuments,
+    readByType: document.getAllDocumentsByType,
+    readById: document.getDocumentById,
+    create: document.createDocument,
+    update: document.updateDocument,
+    delete: document.deleteDocument,
+  },
+  details : {
+
+  },
+  events : {
+
+  },
+  stock_cards: {
+
+  }
 };
 
-const DetailMethods = {
-
-}
-
-const EventsMethods = {
-
-}
-
-const StockCardMethods = {
-  
-}
-
-export {
-  DocumentMethods
-}
