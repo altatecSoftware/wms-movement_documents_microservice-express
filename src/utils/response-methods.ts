@@ -1,5 +1,8 @@
 import DocumentController from "../modules/documents/controller";
-const document = new DocumentController();
+import DocumentService from "../modules/documents/service";
+
+const service = new DocumentService()
+const document = new DocumentController(service);
 
 export const Methods = {
   document: {

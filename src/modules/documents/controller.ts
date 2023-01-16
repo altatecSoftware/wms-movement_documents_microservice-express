@@ -1,5 +1,10 @@
+
 export default class DocumentController {
-  private content: any;
+  private _documentService: any;
+
+  constructor({DocumentService}: any){
+    this._documentService = DocumentService
+  }
 
   public getAllDocuments(content: any) {
     console.log("GetAll", content);
@@ -18,9 +23,5 @@ export default class DocumentController {
   }
   public deleteDocument(content: any) {
     console.log("Delete", content);
-  }
-
-  public getContent(): object {
-    return this.content;
   }
 }

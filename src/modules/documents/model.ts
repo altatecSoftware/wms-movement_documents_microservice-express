@@ -9,20 +9,14 @@ import {
 } from 'typeorm';
 
 enum orderTypes {
-  ENTRY = 'entry_order',
-  EXIT = 'exit_order'
+  ENTRY     = 'entry_order',
+  DEPARTURE = 'departure_order'
 }
 
 enum orderPriority {
-  BAJA = 'baja', 
-  MEDIA = 'media', 
-  ALTA = 'alta'
-}
-
-enum statusProgress {
-  PENDING = "pending",
-  CREATED = "created", 
-  DELETED = "deleted"
+  LOW    = 'low', 
+  MEDIUM = 'medium', 
+  HIGH   = 'high'
 }
 
 @Entity()
@@ -40,23 +34,13 @@ export class Document extends BaseEntity {
   })
   public document_type: orderTypes;
 
-  @Column({
-    type: 'enum',
-    enum: statusProgress,
-    default: 'pending',
-  })
-  public status: statusProgress;
-
   @Column()
   public warehouse_manager: string
-
-  @Column({nullable: false})
-  public area_id: string 
 
   @Column({
     type: 'enum',
     enum: orderPriority,
-    default: 'baja',
+    default: 'low',
     nullable: false,
   })
   public priority: orderPriority;
@@ -76,8 +60,14 @@ export class Document extends BaseEntity {
   @Column({ nullable: false })
   public received_signature: string;
 
+  @Column({ nullable: true })
+  public entry_order: string;
+
+  @Column({ nullable: true })
+  public departure_order: string;
+
   @Column({ nullable: false })
-  public order_code: string;
+  public stock_card: string;
 
   @Column({ nullable: false })
   public Observation: string;

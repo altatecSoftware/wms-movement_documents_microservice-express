@@ -8,11 +8,10 @@ import AmqpRouter from '../routes/amqp.router';
 import PostreSQL from '../database/postgresql';
 //Controllers
 import DocumentController from '../modules/documents/controller';
-import DetailController from '../modules/details/controller';
 //Services
-
+import DocumentService from '../modules/documents/service';
 //Repositories 
-
+import DocumentRepository from '../modules/documents/repository';
 
 const container = createContainer({
   injectionMode: InjectionMode.PROXY,
@@ -24,15 +23,20 @@ container.register({
   amqpRouter: asClass(AmqpRouter).singleton(),
   router: asFunction(Routes).singleton(),
   config: asValue(Config), 
-  postgresql: asClass(PostreSQL).singleton()
+  postgresql: asClass(PostreSQL).singleton(), 
 })
 .register({
-  DetailController: asClass(DetailController), 
+  DocumentService: asClass(DocumentService).singleton()
+})
+.register({
   DocumentController: asClass(DocumentController)
   // DepartureOrderController: 
   // EntryOrderController: 
   // EventController: 
   // StockCardController: 
+})
+.register({
+  DocumentRepository: asClass(DocumentRepository).singleton()
 })
 
 export default container;

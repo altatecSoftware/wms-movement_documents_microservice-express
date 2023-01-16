@@ -5,7 +5,7 @@ import { ExitOrder as ExitOrders } from '../modules/departure_orders/model';
 
 export default class PostreSQL {
   private _entities: any;
-  private _postgresDataSource: any;
+  private _postgresDataSource: DataSource;
   private _config: any;
 
   constructor({config}: any) {
@@ -31,7 +31,11 @@ export default class PostreSQL {
         console.log('Postgres DataSource has been initialized');
       })
       .catch((err) => {
-        console.error('Error during Data Source initialization', err);
+        console.error('***** Error during Data Source initialization *****\n', err);
       });
+  }
+
+  public getPostgresDataSource(){
+    return this._postgresDataSource
   }
 }
