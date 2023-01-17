@@ -1,16 +1,16 @@
 import { DataSource } from 'typeorm';
 import { EntryOrder as EntryOrders } from '../modules/entry_orders/model';
 import { Document as Documents } from '../modules/documents/model';
-import { ExitOrder as ExitOrders } from '../modules/departure_orders/model';
+import { DepartureOrder as DepartureOrders } from '../modules/departure_orders/model';
 
 export default class PostreSQL {
   private _entities: any;
   private _postgresDataSource: DataSource;
   private _config: any;
 
-  constructor({config}: any) {
+  constructor({ config }: any) {
     this._config = config
-    this._entities = [Documents, EntryOrders, ExitOrders];
+    this._entities = [Documents, EntryOrders, DepartureOrders];
   }
 
   public connection() {
@@ -35,7 +35,7 @@ export default class PostreSQL {
       });
   }
 
-  public getPostgresDataSource(){
+  public getPostgresDataSource() {
     return this._postgresDataSource
   }
 }

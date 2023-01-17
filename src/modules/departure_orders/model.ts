@@ -9,18 +9,18 @@ import {
 } from 'typeorm'
 
 @Entity()
-export class ExitOrder extends BaseEntity{
-  @PrimaryGeneratedColumn('uuid') 
+export class DepartureOrder extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   public id: string
 
-  @Column({nullable: false})
-  public origin_warehouse: string 
+  @Column({ nullable: false })
+  public origin_warehouse: string
 
-  @Column({nullable: false})
-  public delivered_by: string 
+  @Column({ nullable: false })
+  public delivered_by: string
 
-  @Column({nullable: false})
-  public received_by: string 
+  @Column({ nullable: false })
+  public received_by: string
 
   @CreateDateColumn()
   public created_at: Date;
