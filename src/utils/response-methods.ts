@@ -1,26 +1,30 @@
-import DocumentController from "../modules/documents/controller";
-import DocumentService from "../modules/documents/service";
 
-const service = new DocumentService()
-const document = new DocumentController(service);
+export const ResponseMethods = ({ DocumentController }: any) => {
 
-export const Methods = {
-  document: {
-    read: document.getAllDocuments,
-    readByType: document.getAllDocumentsByType,
-    readById: document.getDocumentById,
-    create: document.createDocument,
-    update: document.updateDocument,
-    delete: document.deleteDocument,
-  },
-  details : {
+  const reponse_methods = {
+    document: {
+      read: DocumentController.getAllDocuments,
+      readbytype: DocumentController.getAllDocumentsByType,
+      readbyid: DocumentController.getDocumentById,
+      create: DocumentController.createDocument,
+      update: DocumentController.updateDocument,
+      delete: DocumentController.deleteDocument
+    },
+    details: {
 
-  },
-  events : {
+    },
+    events: {
 
-  },
-  stock_cards: {
+    },
+    stock_cards: {
 
-  }
-};
+    }
+  };
+
+  return reponse_methods
+}
+
+
+
+
 
