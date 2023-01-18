@@ -12,6 +12,8 @@ import { ResponseMethods } from '../utils'
 import DocumentController from '../modules/documents/controller';
 //Services
 import DocumentService from '../modules/documents/service';
+import DepartureOrderService from '../modules/departure_orders/service';
+import EntryOrderService from '../modules/entry_orders/service';
 //Repositories 
 import DocumentRepository from '../modules/documents/repository';
 
@@ -28,14 +30,12 @@ container.register({
   postgresql: asClass(PostreSQL).singleton(),
 })
   .register({
-    DocumentService: asClass(DocumentService).singleton()
+    DocumentService: asClass(DocumentService).singleton(),
+    EntryOrderService: asClass(EntryOrderService),
+    DepartureOrderService: asClass(DepartureOrderService)
   })
   .register({
     DocumentController: asClass(DocumentController)
-    // DepartureOrderController: 
-    // EntryOrderController: 
-    // EventController: 
-    // StockCardController: 
   })
   .register({
     DocumentRepository: asClass(DocumentRepository).singleton()

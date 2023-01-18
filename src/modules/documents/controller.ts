@@ -1,9 +1,12 @@
-
 export default class DocumentController {
   private _documentService: any;
+  private _entryOrderService: any;
+  private _departureOrderService: any
 
-  constructor({DocumentService}: any){
+  constructor({ DocumentService, EntryOrderService, DepartureOrderService }: any) {
     this._documentService = DocumentService
+    this._entryOrderService = EntryOrderService
+    this._departureOrderService = DepartureOrderService
   }
 
   public getAllDocuments(content: any) {
