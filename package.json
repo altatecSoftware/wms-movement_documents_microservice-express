@@ -7,7 +7,11 @@
     "dev": "ts-node-dev --respawn src/app.ts",
     "build": "npx tsc",
     "start": "node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "typeorm": "typeorm-ts-node-esm -d ./src/database/postgresql.ts",
+    "m:gen": "npm run typeorm migration:generate",
+    "m:run": "npm run typeorm migration:run"
   },
   "repository": {
     "type": "git",

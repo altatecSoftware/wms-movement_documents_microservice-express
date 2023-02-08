@@ -1,1 +1,1 @@
-export * from './entryOrder.service'
+export * from './inboundOrder.service'

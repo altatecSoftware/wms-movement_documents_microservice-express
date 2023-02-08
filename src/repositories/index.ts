@@ -1,1 +1,1 @@
-export * from './entryOrder.repository'
+export * from './inboundOrder.repository'

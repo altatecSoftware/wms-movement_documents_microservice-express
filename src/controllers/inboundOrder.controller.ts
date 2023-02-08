@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
 
-export class EntryOrderController {
-    private _entryOrderService: any
+export class InboundOrderController {
+    private _inboundOrderService: any
 
-    constructor({EntryOrderService}: any){
-        this._entryOrderService = EntryOrderService
+    constructor({InboundOrderService}: any){
+        this._inboundOrderService = InboundOrderService
 
         this.getAll = this.getAll.bind(this)
         this.get = this.get.bind(this)
@@ -16,7 +16,7 @@ export class EntryOrderController {
 
     public getAll(req: Request, res: Response){
         console.log('Controller')
-        this._entryOrderService.getAll()
+        this._inboundOrderService.getAll()
         res.status(200).json({
             message: "EntryOrders - Get All"
         })
@@ -24,7 +24,7 @@ export class EntryOrderController {
 
     public get(req: Request, res: Response){
         console.log('Controller')
-        this._entryOrderService.get()
+        this._inboundOrderService.get()
         res.status(200).json({
             message: "EntryOrders - Get"
         })
@@ -32,7 +32,7 @@ export class EntryOrderController {
 
     public create(req: Request, res: Response){
         console.log('Controller')
-        this._entryOrderService.create()
+        this._inboundOrderService.create()
         res.status(200).json({
             message: "EntryOrders - Create"
         })
@@ -40,7 +40,7 @@ export class EntryOrderController {
 
     public update(req: Request, res: Response){
         console.log('Controller')
-        this._entryOrderService.delete()
+        this._inboundOrderService.delete()
         res.status(200).json({
             message: "EntryOrders - Update"
         })

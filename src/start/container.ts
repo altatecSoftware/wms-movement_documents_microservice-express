@@ -6,13 +6,13 @@ import Config from '../config';
 import Routes from '../routes';
 //import PostreSQL from '../database/postgresql';
 //Entity Routes
-import { EntryOrderRoutes } from '../routes/entryOrder.routes';
+import { InboundOrderRoutes } from '../routes/inboundOrder.routes';
 //Controllers
-import { EntryOrderController } from '../controllers';
+import { InboundOrderController } from '../controllers';
 //Services
-import { EntryOrderService } from '../services';
+import { InboundOrderService } from '../services';
 //Repositories 
-import { EntryOrderRepository } from '../repositories';
+import { InboundOrderRepository } from '../repositories';
 
 const container = createContainer({
   injectionMode: InjectionMode.PROXY,
@@ -27,16 +27,16 @@ container
     //postgresql: asClass(PostreSQL).singleton(),
   })
   .register({
-    EntryOrderRoutes: asFunction(EntryOrderRoutes)
+    InboundOrderRoutes: asFunction(InboundOrderRoutes)
   })
   .register({
-    EntryOrderRepository: asClass(EntryOrderRepository).singleton()
+    InboundOrderRepository: asClass(InboundOrderRepository).singleton()
   })
   .register({
-    EntryOrderService: asClass(EntryOrderService).singleton()
+    InboundOrderService: asClass(InboundOrderService).singleton()
   })
   .register({
-    EntryOrderController: asClass(EntryOrderController).singleton()
+    InboundOrderController: asClass(InboundOrderController).singleton()
   })
 
 export default container;

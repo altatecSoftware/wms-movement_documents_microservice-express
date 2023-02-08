@@ -1,2 +1,2 @@
-export * from './departureOrder.routes'
-export * from './entryOrder.routes'
+export * from './outboundOrder.routes'
+export * from './inboundOrder.routes'

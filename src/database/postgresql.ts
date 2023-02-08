@@ -1,7 +1,4 @@
 import { DataSource } from 'typeorm';
-import { EntryOrder as EntryOrders } from '../modules/entry_orders/model';
-import { Document as Documents } from '../modules/documents/model';
-import { DepartureOrder as DepartureOrders } from '../modules/departure_orders/model';
 
 export default class PostreSQL {
   private _entities: any;
@@ -22,8 +19,9 @@ export default class PostreSQL {
       port: this._config.DB_PORT,
       database: this._config.DB_NAME,
       entities: this._entities,
-      //logging: true, //Show in console SQL commands
-      synchronize: true, //Read the entities and recreate them
+      logging: false, //Show in console SQL commands
+      synchronize: false, //Read the entities and recreate them - unsafe for production
+      migrationsRun: true //Run migrations 
     });
 
     this._postgresDataSource.initialize()
