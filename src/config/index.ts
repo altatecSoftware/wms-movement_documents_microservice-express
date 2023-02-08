@@ -3,6 +3,7 @@ dotenv.config()
 
 export default {
     SERVER_PORT: process.env.SERVER_PORT || '3000',
+    DOCUMENTS_MICROSERVICE_HOSTNAME: process.env.DOCUMENTS_MICROSERVICE_HOSTNAME,
 
     AMQP_HOSTNAME: process.env.AMQP_HOSTNAME, 
     AMQP_QUEUE: process.env.AMQP_QUEUE || 'documents-microservice', 
