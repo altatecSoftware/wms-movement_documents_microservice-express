@@ -8,10 +8,10 @@ export default class Server {
   private _amqp: any; 
   private _postgresql: any
 
-  constructor({config, router}: any) {
+  constructor({config, router, postgresql}: any) {
     this._config = config;
     //this._amqp = amqp;
-    //this._postgresql = postgresql
+    this._postgresql = postgresql
     this._expressApp = express();
     this._expressApp.use(morgan('tiny'));
     this._expressApp.use(router).use(express.json());
@@ -23,7 +23,7 @@ export default class Server {
       console.log(`Server running on port: ${this._config.SERVER_PORT}`)
     })
     
-    //await this._postgresql.connection();
+    await this._postgresql.connection();
     //await this._amqp.amqpConnection();
     //await this._amqp.amqpConsumer();
   }

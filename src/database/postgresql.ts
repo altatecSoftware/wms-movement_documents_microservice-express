@@ -1,13 +1,17 @@
 import { DataSource } from 'typeorm';
+import { DetailModel, DocumentModel, DocumentSignatureModel, InboundOrderModel, 
+         OutboundOrderModel, MovementModel } from '../models';
 
 export default class PostreSQL {
   private _entities: any;
+  private _migrations: any
   private _postgresDataSource: DataSource;
   private _config: any;
 
   constructor({ config }: any) {
     this._config = config
-    this._entities = [Documents, EntryOrders, DepartureOrders];
+    this._entities = ['src/models/*.model.ts']; 
+    this._migrations = ["src/migrations/*.ts"] 
   }
 
   public connection() {
@@ -19,6 +23,7 @@ export default class PostreSQL {
       port: this._config.DB_PORT,
       database: this._config.DB_NAME,
       entities: this._entities,
+      migrations: this._migrations,
       logging: false, //Show in console SQL commands
       synchronize: false, //Read the entities and recreate them - unsafe for production
       migrationsRun: true //Run migrations 

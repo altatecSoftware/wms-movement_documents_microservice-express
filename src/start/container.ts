@@ -4,7 +4,7 @@ import Server from './server';
 import Config from '../config';
 //import RabbitMQ from '../amqp';
 import Routes from '../routes';
-//import PostreSQL from '../database/postgresql';
+import PostreSQL from '../database/postgresql';
 //Entity Routes
 import { InboundOrderRoutes } from '../routes/inboundOrder.routes';
 //Controllers
@@ -27,7 +27,7 @@ container
     //amqp: asClass(RabbitMQ).singleton(),
     router: asFunction(Routes).singleton(),
     config: asValue(Config),
-    //postgresql: asClass(PostreSQL).singleton(),
+    postgresql: asClass(PostreSQL).singleton(),
   })
   .register({
     InboundOrderRoutes: asFunction(InboundOrderRoutes)

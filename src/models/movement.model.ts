@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
-@Entity()
+@Entity('movements')
 export class MovementModel extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string

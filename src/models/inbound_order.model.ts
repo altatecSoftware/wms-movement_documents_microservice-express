@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
-@Entity()
+@Entity('inbound_orders')
 export class InboundOrderModel extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string
