@@ -13,6 +13,9 @@ import { InboundOrderController } from '../controllers';
 import { InboundOrderService } from '../services';
 //Repositories 
 import { InboundOrderRepository } from '../repositories';
+//Models
+import { DetailModel, DocumentModel, DocumentSignatureModel, 
+         InboundOrderModel, OutboundOrderModel, MovementModel } from '../models';
 
 const container = createContainer({
   injectionMode: InjectionMode.PROXY,
@@ -37,6 +40,14 @@ container
   })
   .register({
     InboundOrderController: asClass(InboundOrderController).singleton()
+  })
+  .register({
+    DetailModel: asClass(DetailModel).singleton(),
+    DocumentModel: asClass(DocumentModel).singleton(),
+    DocumentSignatureModel: asClass(DocumentSignatureModel).singleton(),
+    InboundOrderModel: asClass(InboundOrderModel).singleton(), 
+    OutboundOrderModel: asClass(OutboundOrderModel).singleton(),
+    MovementModel: asClass(MovementModel).singleton()
   })
 
 export default container;
