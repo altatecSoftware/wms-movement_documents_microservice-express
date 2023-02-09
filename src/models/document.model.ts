@@ -1,11 +1,17 @@
 import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
+
+enum documentTypes {
+    INBOUND_ORDER = 'inbound_order',
+    OUTBOUND_ORDER = 'outbound_order',  
+  }
+
 @Entity('documents')
 export class DocumentModel extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string
 
-    @Column("smallint")
+    @Column('smallint')
     priority: number
 
     @Column('text')
@@ -17,25 +23,28 @@ export class DocumentModel extends BaseEntity {
     @Column('text')
     received_signature: string 
 
-    @Column('text')
+    @Column('text', {nullable: true})
     observations: string 
 
-    @Column('character varying', { length: 200 })
-    vehicle_character: string
+    @Column('character varying', {length: 200 })
+    vehicle: string
 
-    @Column('character varying', { length: 30 })
+    @Column('character varying', {length: 30 })
     license_plate: string
 
-    @Column('character varying', { length: 50 })
-    document_type: string
+    @Column({
+        type: 'enum',
+        enum: documentTypes,
+      })
+      document_type: documentTypes
 
     @Column('uuid')
     contact_id: string 
 
-    @Column('uuid')
+    @Column('uuid', {nullable: true})
     inbound_order_id: string 
 
-    @Column('uuid')
+    @Column('uuid', {nullable: true})
     outbound_order_id: string
 
     @CreateDateColumn()

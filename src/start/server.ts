@@ -14,7 +14,7 @@ export default class Server {
     this._postgresql = postgresql
     this._expressApp = express();
     this._expressApp.use(morgan('tiny'));
-    this._expressApp.use(router).use(express.json());
+    this._expressApp.use(router)
     this._expressApp.use(cors())
   }
 

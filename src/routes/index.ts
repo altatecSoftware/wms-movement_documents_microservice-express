@@ -1,10 +1,12 @@
-import { Request, Response, Router } from 'express'
+import express, { Request, Response, Router } from 'express'
 const baseUrl = '/api'
 
 const Routes = ({ InboundOrderRoutes }: any) => {
     const router = Router()
     const apiRouter = Router()
 
+    router.use(express.json())
+    
     //Route for unit test and microservice status
     router.use('/health', (req: Request, res: Response) => {
         res.status(200).json('OK')

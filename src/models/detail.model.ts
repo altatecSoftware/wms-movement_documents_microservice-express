@@ -4,23 +4,23 @@ import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDate
 export class DetailModel extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string
-
-    @Column('uuid', {nullable: false})
-    inventory_id: string 
-
-    @Column('numeric', {nullable: false})
+    
+    @Column('numeric')
     unit_price: number
-
-    @Column('numeric', {nullable: false})
+    
+    @Column('numeric')
     total_price: number
-
-    @Column('integer', {nullable: false})
+    
+    @Column('integer')
     quantity: number
-
-    @Column('integer', {nullable: false})
+    
+    @Column('integer', {nullable: true})
     pending_quantity: number
     
-    @Column('uuid', {nullable: false})
+    @Column('uuid')
+    inventory_id: string 
+    
+    @Column('uuid')
     document_id: string 
 
     @CreateDateColumn()

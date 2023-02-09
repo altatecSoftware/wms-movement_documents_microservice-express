@@ -31,10 +31,12 @@ export class InboundOrderController {
     }
 
     public create(req: Request, res: Response){
-        console.log('Controller')
-        this._inboundOrderService.create()
+        const { body } = req
+        console.log(body)
+        //this._inboundOrderService.create()
         res.status(200).json({
-            message: "EntryOrders - Create"
+            message: "EntryOrders - Create", 
+            data: body
         })
     }
 
