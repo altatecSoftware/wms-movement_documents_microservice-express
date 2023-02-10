@@ -10,9 +10,9 @@ import { DocumentRoutes } from '../routes/document.routes';
 //Controllers
 import { DocumentController } from '../controllers';
 //Services
-import { DocumentService } from '../services';
+import { DocumentService, InboundOrderService, OutboundOrderService } from '../services';
 //Repositories 
-import { DocumentRepository } from '../repositories';
+import { DocumentRepository, InboundOrderRepository, OutboundOrderRepository } from '../repositories';
 //Models
 import { DetailModel, DocumentModel, DocumentSignatureModel, 
          InboundOrderModel, OutboundOrderModel, MovementModel } from '../models';
@@ -33,10 +33,14 @@ container
     DocumentRoutes: asFunction(DocumentRoutes)
   })
   .register({
-    DocumentRepository: asClass(DocumentRepository).singleton()
+    DocumentRepository: asClass(DocumentRepository).singleton(),
+    InboundOrderRepository: asClass(InboundOrderRepository).singleton(),
+    OutboundOrderRepository: asClass(OutboundOrderRepository).singleton()
   })
   .register({
-    DocumentService: asClass(DocumentService).singleton()
+    DocumentService: asClass(DocumentService).singleton(),
+    InboundOrderService: asClass(InboundOrderService).singleton(),
+    OutboundOrderService: asClass(OutboundOrderService).singleton()
   })
   .register({
     DocumentController: asClass(DocumentController).singleton()

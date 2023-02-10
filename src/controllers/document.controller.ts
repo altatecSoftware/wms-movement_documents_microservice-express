@@ -3,9 +3,13 @@ import { Request, Response } from "express";
 
 export class DocumentController {
     private _documentService: any
+    private _inboundOrderService: any
+    private _outboundOrderService: any
 
-    constructor({DocumentService}: any){
+    constructor({DocumentService, InboundOrderService, OutboundOrderService}: any){
         this._documentService = DocumentService
+        this._inboundOrderService = InboundOrderService
+        this._outboundOrderService = OutboundOrderService
 
         this.getAll = this.getAll.bind(this)
         this.get = this.get.bind(this)
@@ -47,11 +51,6 @@ export class DocumentController {
         // } catch (error) {
             
         // }
-        console.log('Controller')
-        this._documentService.create()
-        res.status(200).json({
-            message: "Documents - Create"
-        })
     }
 
     public update(req: Request, res: Response){
