@@ -1,7 +1,7 @@
 import express, { Request, Response, Router } from 'express'
-const baseUrl = '/api'
 
-const Routes = ({ InboundOrderRoutes }: any) => {
+const Routes = ({ DocumentRoutes }: any) => {
+    const baseUrl = '/api'
     const router = Router()
     const apiRouter = Router()
 
@@ -12,8 +12,7 @@ const Routes = ({ InboundOrderRoutes }: any) => {
         res.status(200).json('OK')
     })
 
-    router.use('/inbound-orders', InboundOrderRoutes)
-    //router.use('/departure-orders', DepartureOrderRoutes)
+    router.use('/documents', DocumentRoutes)
 
     apiRouter.use(baseUrl, router)
 

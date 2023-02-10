@@ -6,13 +6,13 @@ import Config from '../config';
 import Routes from '../routes';
 import PostreSQL from '../database/postgresql';
 //Entity Routes
-import { InboundOrderRoutes } from '../routes/inboundOrder.routes';
+import { DocumentRoutes } from '../routes/document.routes';
 //Controllers
-import { InboundOrderController } from '../controllers';
+import { DocumentController } from '../controllers';
 //Services
-import { InboundOrderService } from '../services';
+import { DocumentService } from '../services';
 //Repositories 
-import { InboundOrderRepository } from '../repositories';
+import { DocumentRepository } from '../repositories';
 //Models
 import { DetailModel, DocumentModel, DocumentSignatureModel, 
          InboundOrderModel, OutboundOrderModel, MovementModel } from '../models';
@@ -30,16 +30,16 @@ container
     postgresql: asClass(PostreSQL).singleton(),
   })
   .register({
-    InboundOrderRoutes: asFunction(InboundOrderRoutes)
+    DocumentRoutes: asFunction(DocumentRoutes)
   })
   .register({
-    InboundOrderRepository: asClass(InboundOrderRepository).singleton()
+    DocumentRepository: asClass(DocumentRepository).singleton()
   })
   .register({
-    InboundOrderService: asClass(InboundOrderService).singleton()
+    DocumentService: asClass(DocumentService).singleton()
   })
   .register({
-    InboundOrderController: asClass(InboundOrderController).singleton()
+    DocumentController: asClass(DocumentController).singleton()
   })
   .register({
     DetailModel: asClass(DetailModel).singleton(),

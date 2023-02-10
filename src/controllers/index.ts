@@ -1,1 +1,1 @@
-export * from './inboundOrder.controller'
+export * from './document.controller'

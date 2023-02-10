@@ -1,6 +1,6 @@
 
 
-export class InboundOrderRepository {
+export class DocumentRepository {
 
     constructor(){
 
