@@ -7,8 +7,9 @@ export class InboundOrderService {
         this._inboundOrderRepository = InboundOrderRepository
     }
 
-    public create() {
-        
+    public create({ delivered_by, received_by, destination_warehouse_id }: any) {
+        const inboundOrderData = {delivered_by, received_by, destination_warehouse_id}
+        return this._inboundOrderRepository.create(inboundOrderData)
     }
 
 }

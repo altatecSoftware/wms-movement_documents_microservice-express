@@ -7,7 +7,7 @@ enum documentTypes {
   }
 
 @Entity('documents')
-export class DocumentModel extends BaseEntity {
+export class DocumentEntity extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string
 

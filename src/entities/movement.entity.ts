@@ -11,7 +11,7 @@ enum statusTypes {
   }
 
 @Entity('movements')
-export class MovementModel extends BaseEntity {
+export class MovementEntity extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string
 

@@ -1,28 +1,16 @@
 
 
 export class InboundOrderRepository {
+    private _inboundOrderEntity: any
+    private _myDataSource: any
 
-    constructor(){
-
+    constructor({ InboundOrderEntity, postgresql }: any){
+        this._inboundOrderEntity = InboundOrderEntity
+        this._myDataSource = postgresql
     }
 
-    public getAll() {
-        console.log('Repository')
-    }
-
-    public get() {
-        console.log('Repository')
-    }
-
-    public create() {
-        console.log('Repository')
-    }
-
-    public update() {
-        console.log('Repository')
-    }
-
-    public delete() {
-        console.log('Repository')
+    public async create(inboundOrderData: any) {
+        const inboundOrder = await this._myDataSource.getRepository(this._inboundOrderEntity).create(inboundOrderData)
+        const results = await this._myDataSource.getRepository(this._inboundOrderEntity).save(inboundOrder)
     }
 }

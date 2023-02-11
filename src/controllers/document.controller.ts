@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-
+import { getServiceByDocumentType } from "../helpers";
 
 export class DocumentController {
     private _documentService: any
@@ -44,13 +44,22 @@ export class DocumentController {
     }
 
     public async create(req: Request, res: Response){
-        // try {
-        //     const { body } = req
-        //     const result = await this._documentService(body)
-        //     res.status(200).json(result)
-        // } catch (error) {
+        try {
+            const { body } = req
+            const order_type = req.params.type
             
-        // }
+            const service = getServiceByDocumentType(order_type, this._inboundOrderService, this._inboundOrderService)
+            if(service){
+                const order_id = service.create(body)
+                
+                res.status(200).json({message: 'OK'})
+            } else {
+                //Not Found document type response 
+                res.status(400).json({message: 'Order Type Not Found'})
+            }
+        } catch (error) {
+            res.status(500).json('Internal Server Error')
+        }
     }
 
     public update(req: Request, res: Response){

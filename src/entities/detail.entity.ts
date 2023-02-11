@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity('details')
-export class DetailModel extends BaseEntity {
+export class DetailEntity extends BaseEntity {
     @PrimaryColumn('uuid')
     id: string
     

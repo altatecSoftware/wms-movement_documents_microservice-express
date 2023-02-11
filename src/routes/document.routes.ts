@@ -6,7 +6,7 @@ const DocumentRoutes = ({ DocumentController }: any) => {
     router.get('/', DocumentController.getAll)
     router.get('/type/:type', DocumentController.getByType)
     router.get('/:id', DocumentController.get)
-    router.post('/', DocumentController.create)
+    router.post('/:type', DocumentController.create)
     router.put('/:id', DocumentController.update)
     router.delete('/:id', DocumentController.delete)
 

@@ -1,12 +1,12 @@
-import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity('inbound_orders')
-export class InboundOrderModel extends BaseEntity {
-    @PrimaryColumn('uuid')
+export class InboundOrderEntity extends BaseEntity {
+    @PrimaryGeneratedColumn('uuid')
     id: string
 
     @Column('uuid')
-    destination_warehouse: string
+    destination_warehouse_id: string
 
     @Column('uuid')
     delivered_by: string

@@ -14,8 +14,8 @@ import { DocumentService, InboundOrderService, OutboundOrderService } from '../s
 //Repositories 
 import { DocumentRepository, InboundOrderRepository, OutboundOrderRepository } from '../repositories';
 //Models
-import { DetailModel, DocumentModel, DocumentSignatureModel, 
-         InboundOrderModel, OutboundOrderModel, MovementModel } from '../models';
+import { DetailEntity, DocumentEntity, DocumentSignatureEntity, 
+         InboundOrderEntity, OutboundOrderEntity, MovementEntity } from '../entities';
 
 const container = createContainer({
   injectionMode: InjectionMode.PROXY,
@@ -27,7 +27,7 @@ container
     //amqp: asClass(RabbitMQ).singleton(),
     router: asFunction(Routes).singleton(),
     config: asValue(Config),
-    postgresql: asClass(PostreSQL).singleton(),
+    postgresql: asFunction(PostreSQL).singleton(),
   })
   .register({
     DocumentRoutes: asFunction(DocumentRoutes)
@@ -46,12 +46,12 @@ container
     DocumentController: asClass(DocumentController).singleton()
   })
   .register({
-    DetailModel: asClass(DetailModel).singleton(),
-    DocumentModel: asClass(DocumentModel).singleton(),
-    DocumentSignatureModel: asClass(DocumentSignatureModel).singleton(),
-    InboundOrderModel: asClass(InboundOrderModel).singleton(), 
-    OutboundOrderModel: asClass(OutboundOrderModel).singleton(),
-    MovementModel: asClass(MovementModel).singleton()
+    DetailEntity: asClass(DetailEntity).singleton(),
+    DocumentEntity: asClass(DocumentEntity).singleton(),
+    DocumentSignatureEntity: asClass(DocumentSignatureEntity).singleton(),
+    InboundOrderEntity: asClass(InboundOrderEntity).singleton(), 
+    OutboundOrderEntity: asClass(OutboundOrderEntity).singleton(),
+    MovementEntity: asClass(MovementEntity).singleton()
   })
 
 export default container;
