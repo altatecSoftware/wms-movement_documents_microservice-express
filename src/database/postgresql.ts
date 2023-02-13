@@ -8,7 +8,7 @@ const Postgresql = ({config}) => {
     password: config.DB_PASSWORD,
     port: config.DB_PORT,
     database: config.DB_NAME,
-    entities: ["src/models/*.model.js"],
+    entities: ["src/entities/*.entity.ts"],
     migrations: ["src/migrations/*.ts"],
     logging: false, //Show in console SQL commands
     synchronize: false, //Read the entities and recreate them - unsafe for production

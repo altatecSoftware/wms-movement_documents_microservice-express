@@ -7,9 +7,14 @@ export class InboundOrderService {
         this._inboundOrderRepository = InboundOrderRepository
     }
 
-    public create({ delivered_by, received_by, destination_warehouse_id }: any) {
+    public async create({ delivered_by, received_by, destination_warehouse_id }: any) {
         const inboundOrderData = {delivered_by, received_by, destination_warehouse_id}
-        return this._inboundOrderRepository.create(inboundOrderData)
+        return await this._inboundOrderRepository.create(inboundOrderData)
+    }
+
+    public async update({ delivered_by, received_by, destination_warehouse_id, order_id }: any){
+        const inboundOrderData = { delivered_by, received_by, destination_warehouse_id, order_id }
+        return await this._inboundOrderRepository.update(inboundOrderData) 
     }
 
 }

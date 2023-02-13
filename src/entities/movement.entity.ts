@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 enum statusTypes {
     CANCELLED = 'cancelled',
@@ -7,12 +7,12 @@ enum statusTypes {
     PROCESS_TO_CONFIRM = 'process to confirm', 
     EMITTED = 'emitted',
     DELIVERED = 'delivered', 
-    PARTIALLY_DELIVERED = 'partially_delivered', 
+    PARTIALLY_DELIVERED = 'partially delivered', 
   }
 
 @Entity('movements')
 export class MovementEntity extends BaseEntity {
-    @PrimaryColumn('uuid')
+    @PrimaryGeneratedColumn('uuid')
     id: string
 
     @Column({
