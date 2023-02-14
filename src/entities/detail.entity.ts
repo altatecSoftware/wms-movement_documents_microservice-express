@@ -1,34 +1,40 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, 
+    DeleteDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { DocumentEntity } from "./document.entity";
 
 @Entity('details')
 export class DetailEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: string
+    public id: string
     
     @Column('numeric')
-    unit_price: number
+    public unit_price: number
     
     @Column('numeric')
-    total_price: number
+    public total_price: number
     
     @Column('integer')
-    quantity: number
+    public quantity: number
     
     @Column('integer', {nullable: true})
-    pending_quantity: number
+    public pending_quantity: number
     
     @Column('uuid')
-    inventory_id: string 
-    
+    public inventory_id: string 
+
+    @ManyToOne(() =>  DocumentEntity, (document:   DocumentEntity) => document.detail_id)
+    @JoinColumn({name: 'document_id'})
+    public document_id: DocumentEntity;
+
     @Column('uuid')
-    document_id: string 
+    public good_id: string 
 
     @CreateDateColumn()
-    created_at: Date
+    public created_at: Date
 
     @UpdateDateColumn()
-    updated_at: Date
+    public updated_at: Date
 
     @DeleteDateColumn()
-    deleted_at: Date
+    public deleted_at: Date
 }
