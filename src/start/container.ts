@@ -64,7 +64,7 @@ container
     InboundOrderRepository: asClass(InboundOrderRepository).singleton(),
     OutboundOrderRepository: asClass(OutboundOrderRepository).singleton(),
     DetailRepository: asClass(DetailRepository).singleton(),
-    MovementRepository: asClass(MovementRepository).singleton(), 
+    MovementRepository: asClass(MovementRepository).singleton(),
     DocumentSignatureRepository: asClass(DocumentSignatureRepository).singleton()
   })
 

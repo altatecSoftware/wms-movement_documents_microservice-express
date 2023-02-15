@@ -7,22 +7,15 @@ export class DocumentService {
         this._documentRepository = DocumentRepository
     }
 
-    public async create({ priority, description, delivery_signature, received_signature, observations,
-        vehicle, license_plate, document_type, contact_id, inbound_order_id, outbound_order_id }: any,) {
-        const documentData = {
-            priority, description, delivery_signature, received_signature, observations,
-            vehicle, license_plate, document_type, contact_id, inbound_order_id, outbound_order_id
+    public async create(body: any, orderType: any) {
+        if (!body) {
+            const error = new Error();
+            error.message = "There is no content in the request.";
+            throw error;
         }
-        return await this._documentRepository.create(documentData)
+
     }
 
-    public async update({ priority, description, delivery_signature, received_signature, observations,
-        vehicle, license_plate, document_type, contact_id, inbound_order_id, outbound_order_id, order_id }: any) {
-            const documentData = {
-                priority, description, delivery_signature, received_signature, observations,
-                vehicle, license_plate, document_type, contact_id, inbound_order_id, outbound_order_id, order_id
-            }   
-            return await this._documentRepository.update(documentData)
-    }
+
 
 }

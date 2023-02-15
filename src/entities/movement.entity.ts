@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, 
-         DeleteDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn,
+  DeleteDateColumn, ManyToOne, JoinColumn
+} from "typeorm";
 import { DocumentEntity } from "./document.entity";
 
 enum statusTypes {
@@ -25,7 +27,7 @@ export class MovementEntity extends BaseEntity {
   status: statusTypes
 
   @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.movement_id)
-  @JoinColumn({name: 'document_id'})
+  @JoinColumn({ name: 'document_id' })
   public document_id: DocumentEntity;
 
   @Column('uuid')

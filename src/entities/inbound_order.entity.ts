@@ -1,4 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import {
+    Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn,
+    DeleteDateColumn, OneToOne
+} from "typeorm";
+import { DocumentEntity } from './document.entity';
 
 @Entity('inbound_orders')
 export class InboundOrderEntity extends BaseEntity {
@@ -13,6 +17,9 @@ export class InboundOrderEntity extends BaseEntity {
 
     @Column('uuid')
     received_by: string
+
+    @OneToOne(() => DocumentEntity, (document: DocumentEntity) => document.inbound_order)
+    document_id: DocumentEntity;
 
     @CreateDateColumn()
     created_at: Date
