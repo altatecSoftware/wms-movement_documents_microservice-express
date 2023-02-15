@@ -10,15 +10,9 @@ import { DocumentRoutes } from '../routes/document.routes';
 //Controllers
 import { DocumentController } from '../controllers';
 //Services
-import {
-  DocumentService, InboundOrderService, OutboundOrderService, DetailService,
-  MovementService, DocumentSignatureService
-} from '../services';
+import { DocumentService } from '../services';
 //Repositories 
-import {
-  DocumentRepository, InboundOrderRepository, OutboundOrderRepository,
-  DetailRepository, MovementRepository, DocumentSignatureRepository
-} from '../repositories';
+import { DocumentRepository } from '../repositories';
 //Entities
 import {
   DetailEntity, DocumentEntity, DocumentSignatureEntity,
@@ -38,20 +32,6 @@ container
     postgresql: asFunction(PostreSQL).singleton(),
   })
   .register({
-    DocumentService: asClass(DocumentService).singleton(),
-    InboundOrderService: asClass(InboundOrderService).singleton(),
-    OutboundOrderService: asClass(OutboundOrderService).singleton(),
-    DetailService: asClass(DetailService).singleton(),
-    MovementService: asClass(MovementService).singleton(),
-    DocumentSignatureService: asClass(DocumentSignatureService).singleton()
-  })
-  .register({
-    DocumentController: asClass(DocumentController).singleton()
-  })
-  .register({
-    DocumentRoutes: asFunction(DocumentRoutes)
-  })
-  .register({
     DetailEntity: asValue(DetailEntity),
     DocumentEntity: asValue(DocumentEntity),
     DocumentSignatureEntity: asValue(DocumentSignatureEntity),
@@ -60,12 +40,12 @@ container
     MovementEntity: asValue(MovementEntity)
   })
   .register({
+    DocumentService: asClass(DocumentService).singleton(),
+    DocumentController: asClass(DocumentController).singleton(),
     DocumentRepository: asClass(DocumentRepository).singleton(),
-    InboundOrderRepository: asClass(InboundOrderRepository).singleton(),
-    OutboundOrderRepository: asClass(OutboundOrderRepository).singleton(),
-    DetailRepository: asClass(DetailRepository).singleton(),
-    MovementRepository: asClass(MovementRepository).singleton(),
-    DocumentSignatureRepository: asClass(DocumentSignatureRepository).singleton()
+  })
+  .register({
+    DocumentRoutes: asFunction(DocumentRoutes)
   })
 
 export default container;

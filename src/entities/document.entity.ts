@@ -45,11 +45,11 @@ export class DocumentEntity extends BaseEntity {
   @Column('uuid')
   contact_id: string
 
-  @OneToOne(() => InboundOrderEntity, (inboundOrder: InboundOrderEntity) => inboundOrder.document_id, { nullable: true, cascade: true })
+  @OneToOne(() => InboundOrderEntity, (inboundOrder: InboundOrderEntity) => inboundOrder.document_id, { nullable: true, cascade: true, eager: true })
   @JoinColumn({ name: 'inbound_order_id' })
   inbound_order: InboundOrderEntity;
 
-  @OneToOne(() => OutboundOrderEntity, (outboundOrder: InboundOrderEntity) => outboundOrder.document_id, { nullable: true, cascade: true })
+  @OneToOne(() => OutboundOrderEntity, (outboundOrder: InboundOrderEntity) => outboundOrder.document_id, { nullable: true, cascade: true, eager: true })
   @JoinColumn({ name: 'outbound_order_id' })
   outbound_order: OutboundOrderEntity;
 

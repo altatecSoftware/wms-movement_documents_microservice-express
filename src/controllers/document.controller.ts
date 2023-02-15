@@ -27,11 +27,14 @@ export class DocumentController {
     }
 
     public async create(req: Request, res: Response) {
-        const { body } = req
-        const orderType = req.params.type
-
-        const document = await this._documentService.create(body, orderType)
-        res.status(200).send(document)
+        try {
+            const data = req.body
+            const orderType = req.params.type
+            const document = await this._documentService.create(data, orderType)
+            res.status(200).send(document)
+        } catch (err: any) {
+            res.status(500).send(err.message)
+        }
     }
 
     public async update(req: Request, res: Response) {

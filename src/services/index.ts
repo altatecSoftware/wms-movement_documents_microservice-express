@@ -1,6 +1,1 @@
 export * from './document.service'
-export * from './inbound_order.service'
-export * from './outbound.service'
-export * from './detail.service'
-export * from './movement.service'
-export * from './document_signature.service'
