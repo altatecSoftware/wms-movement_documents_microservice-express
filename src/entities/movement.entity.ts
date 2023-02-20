@@ -3,16 +3,7 @@ import {
   DeleteDateColumn, ManyToOne, JoinColumn
 } from "typeorm";
 import { DocumentEntity } from "./document.entity";
-
-enum statusTypes {
-  CANCELLED = 'cancelled',
-  APPROVED = 'approved',
-  DRAFTED = 'drafted',
-  PROCESS_TO_CONFIRM = 'process to confirm',
-  EMITTED = 'emitted',
-  DELIVERED = 'delivered',
-  PARTIALLY_DELIVERED = 'partially delivered',
-}
+import { statusTypes } from "../utils";
 
 @Entity('movements')
 export class MovementEntity extends BaseEntity {
@@ -26,9 +17,9 @@ export class MovementEntity extends BaseEntity {
   })
   status: statusTypes
 
-  @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.movement_id)
+  @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.movements, {onUpdate: 'CASCADE', onDelete: 'CASCADE'})
   @JoinColumn({ name: 'document_id' })
-  public document_id: DocumentEntity;
+  document_id: DocumentEntity;
 
   @Column('uuid')
   area_id: string

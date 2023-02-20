@@ -10,7 +10,7 @@ export class OutboundOrderEntity extends BaseEntity {
     id: string
 
     @Column('uuid')
-    origin_warehouse: string
+    origin_warehouse_id: string
 
     @Column('uuid')
     delivered_by: string
@@ -19,7 +19,7 @@ export class OutboundOrderEntity extends BaseEntity {
     received_by: string
 
     @OneToOne(() => DocumentEntity, (document: DocumentEntity) => document.outbound_order)
-    document: DocumentEntity;
+    document_id: DocumentEntity;
 
     @CreateDateColumn()
     created_at: Date

@@ -1,6 +1,6 @@
 import {
     Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn,
-    DeleteDateColumn, OneToOne
+    DeleteDateColumn, OneToOne, JoinColumn
 } from "typeorm";
 import { DocumentEntity } from './document.entity';
 

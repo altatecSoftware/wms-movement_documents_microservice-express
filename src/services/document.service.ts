@@ -1,67 +1,132 @@
-import { IDetail, IDocument, IDocumentSignature, IInboundOrder, IMovement } from "../interfaces";
+import { IDetail, IDocument, IDocumentSignature, IInboundOrder, IMovement, IOutboundOrder } from "../interfaces";
+import { documentTypes, statusTypes } from "../utils";
 
 export class DocumentService {
     private _documentRepository: any
     private _details: IDetail[] = []
     private _document: IDocument
-    private _inboundOrder: IInboundOrder 
-    private _movement: IMovement[] = []
-    private _documentSignature: IDocumentSignature[] = []
+    private _inboundOrder: IInboundOrder
+    private _outboundOrder: IOutboundOrder
+    private _movements: IMovement[] = []
+    private _documentSignatures: IDocumentSignature[] = []
 
     constructor({ DocumentRepository }: any) {
         this._documentRepository = DocumentRepository
     }
 
-    public async create(data: any, orderType: any) {
-        if (Object.keys(data).length === 0) {
+    public async get(id: any){
+        const document = await this._documentRepository.get(id)
+        if(!document){
+            const error = new Error();
+            error.message = "Document not found";
+            throw error; 
+        }
+        return document 
+    }
+
+    public async create(body: any) {
+        if (Object.keys(body).length === 0) {
             const error = new Error();
             error.message = "There is not content for the request";
             throw error;
         }
 
-        const isValid = await this._getDocumentType(orderType)
+        const isValid = await this._isDocumentTypeValid(body.document_type)
         if (!isValid) {
             const error = new Error();
             error.message = "invalid document type";
             throw error;
         }
-
-        await this._getGoods(data.goods)
-
+        //Details
+        this._details = body.details
+        //Documents
         const { priority, description, delivery_signature, received_signature,
-            observations, vehicle, license_plate, document_type, contact_id } = data
+            observations, vehicle, license_plate, document_type, contact_id } = body
         this._document = {
             priority, description, delivery_signature, received_signature,
             observations, vehicle, license_plate, document_type, contact_id
         }
-
-        const { destination_warehouse_id, delivered_by, received_by } = data
+        //InboundOrders / OutboundOrders
+        const { delivered_by, received_by, origin_warehouse_id, destination_warehouse_id } = body
         this._inboundOrder = { destination_warehouse_id, delivered_by, received_by }
+        this._outboundOrder = { origin_warehouse_id, delivered_by, received_by }
+        //Movements
+        const { status, area_id } = body
+        this._movements = [{ status, area_id }]
+        //DocumentSignatures
+        const { path } = body
+        this._documentSignatures = [{ path }]
+        
+        
+        return await this._documentRepository.create(this._document, this._inboundOrder, this._outboundOrder, this._details,
+                                               this._movements, this._documentSignatures)
 
-        const { status, area_id } = data
-        this._movement.push({ status, area_id })
-
-        const { path } = data
-        this._documentSignature.push({ path })
-
-
-        return this._documentRepository.create(this._document, this._inboundOrder, this._details, this._movement, this._documentSignature)
     }
 
-    private _getDocumentType(orderType: any) {
-        const orderTypes = {
-            "inbound-order": "inbound_order",
-            "outbound-order": "outbound_order"
+    public async update(body: any, id: string){
+        if (Object.keys(body).length === 0) {
+            const error = new Error();
+            error.message = "There is not content for the request";
+            throw error;
         }
+        const document = await this._documentRepository.get(id)
+        if(!document || document.document_type !== body.document_type){
+            const error = new Error();
+            error.message = "Document not found";
+            throw error;
+        }
+        const newData = Object.assign(document, body)
 
-        for (const key in orderTypes) {
-            return key === orderType ? orderTypes[key] : ''
-        }
+        return await this._documentRepository.update(newData, id)
     }
 
-    private _getGoods(goodsList: any) {
-        goodsList.map((good: any) => {
-            this._details.push(good)
-        })
+    public async delete(id: string){
+        const document = await this._documentRepository.get(id)
+        if(!document){
+            const error = new Error();
+            error.message = "Document not found";
+            throw error;
+        }
+
+        return await this._documentRepository.delete(id)
+    }
+
+    public async newStatus(body: any, document_id: string){
+        if (Object.keys(body).length === 0) {
+            const error = new Error();
+            error.message = "There is not content for the request";
+            throw error;
+        }
+        const document = await this._documentRepository.get(document_id)
+        if(!document){
+            const error = new Error();
+            error.message = "Document not found";
+            throw error;
+        }
+
+        const isValid = await this._isDocumentStatusValid(body.status)
+        if (!isValid) {
+            const error = new Error();
+            error.message = "invalid document status";
+            throw error;
+        }
+
+        return await this._documentRepository.newStatus(body, document_id)
+    }
+
+    private _isDocumentTypeValid(documentType: string) {
+        let isValid: boolean = false
+        for (const key in documentTypes) {
+            documentTypes[key] === documentType ? isValid = true : ''
+        }
+        return isValid
+    }
+
+    private _isDocumentStatusValid(documentStatus: string){
+        let isValid: boolean = false
+        for (const key in statusTypes) {
+            statusTypes[key] === documentStatus ? isValid = true : ''
+        }
+        return isValid
     }
 }

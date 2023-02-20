@@ -3,12 +3,7 @@ import {
   DeleteDateColumn, OneToOne, JoinColumn, OneToMany
 } from "typeorm";
 import { DetailEntity, DocumentSignatureEntity, InboundOrderEntity, MovementEntity, OutboundOrderEntity } from '.'
-
-
-enum documentTypes {
-  INBOUND_ORDER = 'inbound_order',
-  OUTBOUND_ORDER = 'outbound_order',
-}
+import { documentTypes } from "../utils";
 
 @Entity('documents')
 export class DocumentEntity extends BaseEntity {
@@ -45,22 +40,22 @@ export class DocumentEntity extends BaseEntity {
   @Column('uuid')
   contact_id: string
 
-  @OneToOne(() => InboundOrderEntity, (inboundOrder: InboundOrderEntity) => inboundOrder.document_id, { nullable: true, cascade: true, eager: true })
+  @OneToOne(() => InboundOrderEntity, (inboundOrder: InboundOrderEntity) => inboundOrder.document_id, { nullable: true, cascade: true, eager: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'inbound_order_id' })
   inbound_order: InboundOrderEntity;
 
-  @OneToOne(() => OutboundOrderEntity, (outboundOrder: InboundOrderEntity) => outboundOrder.document_id, { nullable: true, cascade: true, eager: true })
+  @OneToOne(() => OutboundOrderEntity, (outboundOrder: InboundOrderEntity) => outboundOrder.document_id, { nullable: true, cascade: true, eager: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'outbound_order_id' })
   outbound_order: OutboundOrderEntity;
 
-  @OneToMany(() => DetailEntity, (detail: DetailEntity) => detail.document_id, { cascade: true })
-  detail_id: DetailEntity[];
+  @OneToMany(() => DetailEntity, (detail: DetailEntity) => detail.document_id, { cascade: true, eager: true })
+  details: DetailEntity[];
 
-  @OneToMany(() => DocumentSignatureEntity, (document_signature: DocumentSignatureEntity) => document_signature.document_id, { cascade: true })
-  document_signature_id: DocumentSignatureEntity[];
+  @OneToMany(() => DocumentSignatureEntity, (document_signature: DocumentSignatureEntity) => document_signature.document_id, { cascade: true, eager: true })
+  document_signatures: DocumentSignatureEntity[];
 
-  @OneToMany(() => MovementEntity, (movement: MovementEntity) => movement.document_id, { cascade: true })
-  movement_id: MovementEntity[];
+  @OneToMany(() => MovementEntity, (movement: MovementEntity) => movement.document_id, { cascade: true, eager: true })
+  movements: MovementEntity[];
 
   @CreateDateColumn()
   created_at: Date
