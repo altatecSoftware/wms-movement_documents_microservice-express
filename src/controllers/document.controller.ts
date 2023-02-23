@@ -16,7 +16,9 @@ export class DocumentController {
     }
 
     public getAll(req: Request, res: Response) {
-
+        res.status(200).json({
+            message: "Hello World!"
+        })
     }
 
     public getByType(req: Request, res: Response) {
