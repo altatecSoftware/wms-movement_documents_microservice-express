@@ -21,6 +21,12 @@ export class InboundOrderEntity extends BaseEntity {
     @OneToOne(() => DocumentEntity, (document: DocumentEntity) => document.inbound_order)
     document_id: DocumentEntity;
 
+    @Column('uuid', { nullable: true })
+    user_id: string
+  
+    @Column('uuid', { nullable: true })
+    root_user_id: string
+
     @CreateDateColumn()
     created_at: Date
 

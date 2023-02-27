@@ -15,14 +15,23 @@ export class DocumentController {
         this.newStatus = this.newStatus.bind(this)
     }
 
-    public getAll(req: Request, res: Response) {
-        res.status(200).json({
-            message: "Hello World!"
-        })
+    public async getAll(req: Request, res: Response) {
+        try {
+            const documents = await this._documentService.getAll()
+            res.status(200).send(documents)
+        } catch (err: any) {
+            res.status(500).send(err.message)
+        }
     }
 
-    public getByType(req: Request, res: Response) {
-
+    public async getByType(req: Request, res: Response) {
+        try {
+            const typeDocument = req.params.type
+            const documents = await this._documentService.getByType(typeDocument)
+            res.status(200).send(documents)
+        } catch (err: any) {
+            res.status(500).send(err.message)
+        }
     }
 
     public async get(req: Request, res: Response) {

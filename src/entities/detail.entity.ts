@@ -31,6 +31,12 @@ export class DetailEntity extends BaseEntity {
     @Column('uuid')
     good_id: string
 
+    @Column('uuid', { nullable: true })
+    user_id: string
+
+    @Column('uuid', { nullable: true })
+    root_user_id: string
+
     @CreateDateColumn()
     created_at: Date
 

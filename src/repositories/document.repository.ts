@@ -9,6 +9,45 @@ export class DocumentRepository {
         this._myDataSource = postgresql
     }
 
+    public async getAll(){
+        //queryBuilder or with relations 
+        const documents = await this._myDataSource.getRepository(DocumentEntity)
+            .createQueryBuilder('doc')
+            .leftJoinAndSelect("doc.inbound_order", "in")
+            .leftJoinAndSelect("doc.outbound_order", "out")
+            .leftJoinAndSelect("doc.details", "det")
+            .leftJoinAndSelect("doc.movements", "mov")
+            .leftJoinAndSelect("doc.document_signatures", "doc_sig")
+            .select(['doc.id', 'doc.priority', 'doc.description', 'doc.delivery_signature', 'doc.received_signature',
+                'doc.observations', 'doc.vehicle', 'doc.license_plate', 'doc.document_type', 'doc.contact_id',
+                'in.id', 'in.destination_warehouse_id', 'in.delivered_by', 'in.received_by', 'out.id', 'out.origin_warehouse_id',
+                'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
+                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id', 
+                'doc_sig.path', 'doc_sig.id'])
+            .getMany()
+            return documents
+    }
+
+    public async getByType(document_type: string){
+        //queryBuilder or with relations 
+        const documents = await this._myDataSource.getRepository(DocumentEntity)
+            .createQueryBuilder('doc')
+            .leftJoinAndSelect("doc.inbound_order", "in")
+            .leftJoinAndSelect("doc.outbound_order", "out")
+            .leftJoinAndSelect("doc.details", "det")
+            .leftJoinAndSelect("doc.movements", "mov")
+            .leftJoinAndSelect("doc.document_signatures", "doc_sig")
+            .where("doc.document_type = :document_type", { document_type })
+            .select(['doc.id', 'doc.priority', 'doc.description', 'doc.delivery_signature', 'doc.received_signature',
+                'doc.observations', 'doc.vehicle', 'doc.license_plate', 'doc.document_type', 'doc.contact_id',
+                'in.id', 'in.destination_warehouse_id', 'in.delivered_by', 'in.received_by', 'out.id', 'out.origin_warehouse_id',
+                'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
+                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id', 
+                'doc_sig.path', 'doc_sig.id'])
+            .getMany()  
+            return documents
+    }
+
     public async get(id: string) {
         //queryBuilder or with relations 
         const document = await this._myDataSource.getRepository(DocumentEntity)
@@ -23,10 +62,9 @@ export class DocumentRepository {
                 'doc.observations', 'doc.vehicle', 'doc.license_plate', 'doc.document_type', 'doc.contact_id',
                 'in.id', 'in.destination_warehouse_id', 'in.delivered_by', 'in.received_by', 'out.id', 'out.origin_warehouse_id',
                 'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
-                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.updated_at',
-                'mov.id', 'doc_sig.path', 'doc_sig.id'])
+                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id', 
+                'doc_sig.path', 'doc_sig.id'])
             .getOne()
-
         return document
     }
 
@@ -46,10 +84,10 @@ export class DocumentRepository {
         return await documentRepository.save(documentEntity)
     }
 
-    public async update(data: any) {
+    public async update(document: any, data: any, id: string) {
         const documentRepository = await this._myDataSource.getRepository(DocumentEntity)
-        const updatedDocumentEntity = await documentRepository.preload(data);
-        return await documentRepository.save(updatedDocumentEntity);
+        const newDocument=  Object.assign(document, data)
+        return await documentRepository.save(newDocument);
     }
 
     public async delete(id: string) {

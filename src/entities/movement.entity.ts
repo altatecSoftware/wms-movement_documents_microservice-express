@@ -17,12 +17,18 @@ export class MovementEntity extends BaseEntity {
   })
   status: statusTypes
 
-  @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.movements, {onUpdate: 'CASCADE', onDelete: 'CASCADE'})
+  @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.movements, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'document_id' })
   document_id: DocumentEntity;
 
   @Column('uuid')
   area_id: string
+
+  @Column('uuid', { nullable: true })
+  user_id: string
+
+  @Column('uuid', { nullable: true })
+  root_user_id: string
 
   @CreateDateColumn()
   created_at: Date

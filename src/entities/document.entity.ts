@@ -57,6 +57,12 @@ export class DocumentEntity extends BaseEntity {
   @OneToMany(() => MovementEntity, (movement: MovementEntity) => movement.document_id, { cascade: true, eager: true })
   movements: MovementEntity[];
 
+  @Column('uuid', { nullable: true })
+  user_id: string
+
+  @Column('uuid', { nullable: true })
+  root_user_id: string
+
   @CreateDateColumn()
   created_at: Date
 

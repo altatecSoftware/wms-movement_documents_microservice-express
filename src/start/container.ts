@@ -18,6 +18,10 @@ import {
   DetailEntity, DocumentEntity, DocumentSignatureEntity,
   InboundOrderEntity, OutboundOrderEntity, MovementEntity
 } from '../entities';
+//Validations
+import * as Validations from '../validations'
+//Middlewares
+import * as Middlewares from '../middlewares'
 
 const container = createContainer({
   injectionMode: InjectionMode.PROXY,
@@ -30,6 +34,10 @@ container
     router: asFunction(Routes).singleton(),
     config: asValue(Config),
     postgresql: asFunction(PostreSQL).singleton(),
+  })
+  .register({
+    Validations: asValue(Validations),
+    Middlewares: asValue(Middlewares)
   })
   .register({
     DetailEntity: asValue(DetailEntity),

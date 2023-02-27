@@ -12,9 +12,15 @@ export class DocumentSignatureEntity extends BaseEntity {
     @Column('text')
     path: string
 
-    @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.document_signatures, {onUpdate: 'CASCADE', onDelete: 'CASCADE'})
+    @ManyToOne(() => DocumentEntity, (document: DocumentEntity) => document.document_signatures, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     @JoinColumn({ name: 'document_id' })
     document_id: DocumentEntity;
+
+    @Column('uuid', { nullable: true })
+    user_id: string
+
+    @Column('uuid', { nullable: true })
+    root_user_id: string
 
     @CreateDateColumn()
     created_at: Date
