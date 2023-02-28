@@ -15,8 +15,12 @@ export class DocumentController {
     }
 
     public async getAll(req: Request, res: Response) {
+        const take = req.body.take || 10
+        const page = req.body.page || 1;
+        const skip = (page - 1) * take;
+
         try {
-            const documents = await this._documentService.getAll()
+            const documents = await this._documentService.getAll(take, skip, page)
             res.status(200).send(documents)
         } catch (err: any) {
             res.status(500).send(err.message)

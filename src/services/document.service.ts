@@ -14,10 +14,12 @@ export class DocumentService {
         this._documentRepository = DocumentRepository
     }
 
-    public async getAll() {
-        const documents = await this._documentRepository.getAll()
+    public async getAll(take: number, skip: number, page: number) {
+        const documents = await this._documentRepository.getAll(take, skip)
         return {
             status: "success",
+            count: take,
+            page,
             data: {
                 documents
             }
