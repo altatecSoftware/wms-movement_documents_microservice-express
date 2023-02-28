@@ -1,2 +1,2 @@
-export * from './order_types.util'
+export * from './document_types.util'
 export * from './order_status.util'

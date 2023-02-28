@@ -1,6 +1,6 @@
 import { Router } from "express"
 
-const DocumentRoutes = ({ DocumentController, Validations }: any) => {
+const DocumentRoutes = ({ DocumentController, MovementController, Validations }: any) => {
     const router = Router()
 
     //CRUD Routes
@@ -10,8 +10,8 @@ const DocumentRoutes = ({ DocumentController, Validations }: any) => {
     router.put('/:id', Validations.updateDocument(), DocumentController.update)
     router.delete('/:id', Validations.deleteDocument(), DocumentController.delete)
     //Specific routes 
-    router.post('/status/:id',  DocumentController.newStatus)
     router.get('/type/:type', DocumentController.getByType)
+    router.post('/status/:id', MovementController.newStatus)
 
     return router
 }

@@ -4,14 +4,22 @@ import { documentTypes } from "../utils"
 
 export class DocumentRepository {
     private _myDataSource: any
+    private _documentEntity: DocumentEntity
+    private _inboundOrderEntity: InboundOrderEntity
+    private _outboundOrderEntity: OutboundOrderEntity
+    private _movementEntity: MovementEntity
 
-    constructor({ postgresql }) {
+    constructor({ postgresql, DocumentEntity, InboundOrderEntity, OutboundOrderEntity, MovementEntity }) {
         this._myDataSource = postgresql
+        this._documentEntity = DocumentEntity
+        this._inboundOrderEntity = InboundOrderEntity
+        this._outboundOrderEntity = OutboundOrderEntity
+        this._movementEntity = MovementEntity
     }
 
-    public async getAll(){
+    public async getAll() {
         //queryBuilder or with relations 
-        const documents = await this._myDataSource.getRepository(DocumentEntity)
+        const documents = await this._myDataSource.getRepository(this._documentEntity)
             .createQueryBuilder('doc')
             .leftJoinAndSelect("doc.inbound_order", "in")
             .leftJoinAndSelect("doc.outbound_order", "out")
@@ -22,15 +30,15 @@ export class DocumentRepository {
                 'doc.observations', 'doc.vehicle', 'doc.license_plate', 'doc.document_type', 'doc.contact_id',
                 'in.id', 'in.destination_warehouse_id', 'in.delivered_by', 'in.received_by', 'out.id', 'out.origin_warehouse_id',
                 'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
-                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id', 
+                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id',
                 'doc_sig.path', 'doc_sig.id'])
             .getMany()
-            return documents
+        return documents
     }
 
-    public async getByType(document_type: string){
+    public async getByType(document_type: string) {
         //queryBuilder or with relations 
-        const documents = await this._myDataSource.getRepository(DocumentEntity)
+        const documents = await this._myDataSource.getRepository(this._documentEntity)
             .createQueryBuilder('doc')
             .leftJoinAndSelect("doc.inbound_order", "in")
             .leftJoinAndSelect("doc.outbound_order", "out")
@@ -42,15 +50,15 @@ export class DocumentRepository {
                 'doc.observations', 'doc.vehicle', 'doc.license_plate', 'doc.document_type', 'doc.contact_id',
                 'in.id', 'in.destination_warehouse_id', 'in.delivered_by', 'in.received_by', 'out.id', 'out.origin_warehouse_id',
                 'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
-                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id', 
+                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id',
                 'doc_sig.path', 'doc_sig.id'])
-            .getMany()  
-            return documents
+            .getMany()
+        return documents
     }
 
     public async get(id: string) {
         //queryBuilder or with relations 
-        const document = await this._myDataSource.getRepository(DocumentEntity)
+        const document = await this._myDataSource.getRepository(this._documentEntity)
             .createQueryBuilder('doc')
             .leftJoinAndSelect("doc.inbound_order", "in")
             .leftJoinAndSelect("doc.outbound_order", "out")
@@ -62,7 +70,7 @@ export class DocumentRepository {
                 'doc.observations', 'doc.vehicle', 'doc.license_plate', 'doc.document_type', 'doc.contact_id',
                 'in.id', 'in.destination_warehouse_id', 'in.delivered_by', 'in.received_by', 'out.id', 'out.origin_warehouse_id',
                 'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
-                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id', 
+                'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id',
                 'doc_sig.path', 'doc_sig.id'])
             .getOne()
         return document
@@ -71,7 +79,7 @@ export class DocumentRepository {
     public async create(documentData: IDocument, inboundOrderData: IInboundOrder, outboundOrderData: IOutboundOrder,
         detailData: IDetail[], movementData: IMovement[], documentSignatureData: IDocumentSignature[]) {
 
-        const documentRepository = await this._myDataSource.getRepository(DocumentEntity)
+        const documentRepository = await this._myDataSource.getRepository(this._documentEntity)
         const entityDocument = await documentRepository.create(documentData)
         const documentEntity = {
             ...entityDocument, inbound_order: inboundOrderData, outbound_order: outboundOrderData,
@@ -85,30 +93,30 @@ export class DocumentRepository {
     }
 
     public async update(document: any, data: any, id: string) {
-        const documentRepository = await this._myDataSource.getRepository(DocumentEntity)
-        const newDocument=  Object.assign(document, data)
+        const documentRepository = await this._myDataSource.getRepository(this._documentEntity)
+        const newDocument = Object.assign(document, data)
         return await documentRepository.save(newDocument);
     }
 
     public async delete(id: string) {
         let documentAux: any
         let repositoryAux: any
-        const documentRepository = await this._myDataSource.getRepository(DocumentEntity);
+        const documentRepository = await this._myDataSource.getRepository(this._documentEntity);
         const document = await documentRepository.findOne({ where: { id } });
-        if(document.document_type === documentTypes.INBOUND_ORDER){
-            repositoryAux = await this._myDataSource.getRepository(InboundOrderEntity);
+        if (document.document_type === documentTypes.INBOUND_ORDER) {
+            repositoryAux = await this._myDataSource.getRepository(this._inboundOrderEntity);
             documentAux = await repositoryAux.findOne({ where: { id: document.inbound_order.id } });
-        } else if(document.document_type === documentTypes.OUTBOUND_ORDER){
-            repositoryAux = await this._myDataSource.getRepository(OutboundOrderEntity);
+        } else if (document.document_type === documentTypes.OUTBOUND_ORDER) {
+            repositoryAux = await this._myDataSource.getRepository(this._outboundOrderEntity);
             documentAux = await repositoryAux.findOne({ where: { id: document.outbound_order.id } });
         }
-        
+
         return await repositoryAux.remove(documentAux)
     }
 
-    public async newStatus(data: any, document_id: string){
-        const movementRepository = await this._myDataSource.getRepository(MovementEntity)
-        
-        return await movementRepository.save({ ...data, document_id})
+    public async newStatus(data: any, document_id: string) {
+        const movementRepository = await this._myDataSource.getRepository(this._movementEntity)
+
+        return await movementRepository.save({ ...data, document_id })
     }
 }

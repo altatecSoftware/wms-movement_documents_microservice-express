@@ -14,51 +14,45 @@ export class DocumentService {
         this._documentRepository = DocumentRepository
     }
 
-    public async getAll(){
+    public async getAll() {
         const documents = await this._documentRepository.getAll()
-        if(!documents){
-            return "No registered documents"
+        return {
+            status: "success",
+            data: {
+                documents
+            }
         }
-        return documents
     }
 
-    public async getByType(typeDocument: string){
-        const isValid = await this._isDocumentTypeValid(typeDocument)
-        if(!isValid){
-            const error = new Error();
-            error.message = "invalid document type";
-            throw error;
-        }
+    public async getByType(typeDocument: string) {
+
         const documents = await this._documentRepository.getByType(typeDocument)
-        if(!documents.length){
-            return `There are no registered documents of type ${ typeDocument }`
+        if (!documents.length) {
+            return { status: "success", message: `There are no registered documents of type ${typeDocument}` }
         }
-        return documents
+        return {
+            status: "success",
+            data: {
+                documents
+            }
+        }
     }
- 
+
     public async get(id: any) {
         const document = await this._documentRepository.get(id)
         if (!document) {
-            const error = new Error();
-            error.message = "Document not found";
-            throw error;
+            return { status: "success", message: "There is no record with the id: " + id }
         }
-        return document
+        return {
+            status: "success",
+            data: {
+                ...document
+            }
+        }
     }
 
     public async create(body: any) {
-        if (Object.keys(body).length === 0) {
-            const error = new Error();
-            error.message = "There is not content for the request";
-            throw error;
-        }
 
-        const isValid = await this._isDocumentTypeValid(body.document_type)
-        if (!isValid) {
-            const error = new Error();
-            error.message = "invalid document type";
-            throw error;
-        }
         //Details
         this._details = body.details
         //Documents
@@ -80,22 +74,20 @@ export class DocumentService {
         this._documentSignatures = path
 
 
-        return await this._documentRepository.create(this._document, this._inboundOrder, this._outboundOrder, this._details,
+        const document = await this._documentRepository.create(this._document, this._inboundOrder, this._outboundOrder, this._details,
             this._movements, this._documentSignatures)
 
+        return {
+            status: "success",
+            data: document
+        }
     }
 
     public async update(body: any, id: string) {
-        if (Object.keys(body).length === 0) {
-            const error = new Error();
-            error.message = "There is not content for the request";
-            throw error;
-        }
+
         const document = await this._documentRepository.get(id)
         if (!document) {
-            const error = new Error();
-            error.message = "Document not found";
-            throw error;
+            return { status: "success", message: "There is no record with the id: " + id }
         }
         return await this._documentRepository.update(document, body, id)
     }
@@ -103,9 +95,7 @@ export class DocumentService {
     public async delete(id: string) {
         const document = await this._documentRepository.get(id)
         if (!document) {
-            const error = new Error();
-            error.message = "Document not found";
-            throw error;
+            return { status: "success", message: "There is no record with the id: " + id }
         }
 
         return await this._documentRepository.delete(id)
@@ -124,29 +114,6 @@ export class DocumentService {
             throw error;
         }
 
-        const isValid = await this._isDocumentStatusValid(body.status)
-        if (!isValid) {
-            const error = new Error();
-            error.message = "invalid document status";
-            throw error;
-        }
-
         return await this._documentRepository.newStatus(body, document_id)
-    }
-
-    private _isDocumentTypeValid(documentType: string) {
-        let isValid: boolean = false
-        for (const key in documentTypes) {
-            documentTypes[key] === documentType ? isValid = true : ''
-        }
-        return isValid
-    }
-
-    private _isDocumentStatusValid(documentStatus: string) {
-        let isValid: boolean = false
-        for (const key in statusTypes) {
-            statusTypes[key] === documentStatus ? isValid = true : ''
-        }
-        return isValid
     }
 }
