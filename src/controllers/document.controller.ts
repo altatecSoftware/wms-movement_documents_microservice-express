@@ -12,7 +12,6 @@ export class DocumentController {
         this.update = this.update.bind(this)
         this.delete = this.delete.bind(this)
         this.getByType = this.getByType.bind(this)
-        this.newStatus = this.newStatus.bind(this)
     }
 
     public async getAll(req: Request, res: Response) {
@@ -28,6 +27,7 @@ export class DocumentController {
         try {
             const typeDocument = req.params.type
             const documents = await this._documentService.getByType(typeDocument)
+
             res.status(200).send(documents)
         } catch (err: any) {
             res.status(500).send(err.message)
@@ -47,8 +47,7 @@ export class DocumentController {
     public async create(req: Request, res: Response) {
         try {
             const data = req.body
-            const documentType = req.params.type
-            const document = await this._documentService.create(data, documentType)
+            const document = await this._documentService.create(data)
             res.status(200).send(document)
         } catch (err: any) {
             res.status(500).send(err.message)
@@ -71,17 +70,6 @@ export class DocumentController {
             const document_id = req.params.id
             const document = await this._documentService.delete(document_id)
             res.status(200).send(document)
-        } catch (err: any) {
-            res.status(500).send(err.message)
-        }
-    }
-
-    public async newStatus(req: Request, res: Response){
-        try {
-            const document_id = req.params.id
-            const data = req.body
-            const movement = await this._documentService.newStatus(data, document_id)
-            res.status(200).send(movement)
         } catch (err: any) {
             res.status(500).send(err.message)
         }
