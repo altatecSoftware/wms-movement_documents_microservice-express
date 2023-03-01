@@ -38,7 +38,7 @@ export class DocumentRepository {
         return documents
     }
 
-    public async getByType(document_type: string) {
+    public async getByType(document_type: string, take: number, skip: number) {
         //queryBuilder or with relations 
         const documents = await this._myDataSource.getRepository(this._documentEntity)
             .createQueryBuilder('doc')
@@ -54,6 +54,8 @@ export class DocumentRepository {
                 'out.delivered_by', 'out.received_by', 'det.id', 'det.unit_price', 'det.total_price', 'det.quantity',
                 'det.pending_quantity', 'det.inventory_id', 'det.good_id', 'mov.status', 'mov.area_id', 'mov.id',
                 'doc_sig.path', 'doc_sig.id'])
+            .take(take)
+            .skip(skip)
             .getMany()
         return documents
     }

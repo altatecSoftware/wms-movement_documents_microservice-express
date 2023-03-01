@@ -16,9 +16,12 @@ export class DocumentService {
 
     public async getAll(take: number, skip: number, page: number) {
         const documents = await this._documentRepository.getAll(take, skip)
+        if (!documents.length) {
+            return { status: "success", message: "No documents to show" }
+        }
         return {
             status: "success",
-            count: take,
+            count: documents.length,
             page,
             data: {
                 documents
@@ -26,14 +29,16 @@ export class DocumentService {
         }
     }
 
-    public async getByType(typeDocument: string) {
+    public async getByType(typeDocument: string, take: number, page: number, skip: number) {
 
-        const documents = await this._documentRepository.getByType(typeDocument)
+        const documents = await this._documentRepository.getByType(typeDocument, take, skip)
         if (!documents.length) {
-            return { status: "success", message: `There are no registered documents of type ${typeDocument}` }
+            return { status: "success", message: "No documents to show" }
         }
         return {
             status: "success",
+            count: documents.length,
+            page,
             data: {
                 documents
             }

@@ -1,12 +1,37 @@
 import { RequestHandler } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
-import { documentTypes, statusTypes } from "../utils";
+import { documentTypes } from "../utils";
+
+export const getAllDocument = (): RequestHandler => {
+    return celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            take: Joi.number().required(),
+            page: Joi.number().required()
+        })
+    })
+}
+
+export const getByType = (): RequestHandler => {
+    return celebrate({
+        [Segments.PARAMS]: Joi.object().keys({
+            type: Joi.string().required(),
+        })
+    })
+}
+
+export const get = (): RequestHandler => {
+    return celebrate({
+        [Segments.PARAMS]: Joi.object().keys({
+            id: Joi.string().guid().required(),
+        })
+    })
+}
 
 export const createDocument = (): RequestHandler => {
     return celebrate({
         [Segments.BODY]: Joi.object().keys({
             //Document entity
-            priority: Joi.number().required(),
+            priority: Joi.number().valid(1, 2, 3).required(),
             description: Joi.string().required(),
             delivered_by: Joi.string().guid().required(),
             received_by: Joi.string().guid().required(),
