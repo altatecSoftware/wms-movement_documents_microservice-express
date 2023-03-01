@@ -28,9 +28,13 @@ export class DocumentController {
     }
 
     public async getByType(req: Request, res: Response) {
+        const take = req.body.take || 10
+        const page = req.body.page || 1;
+        const skip = (page - 1) * take;
+
         try {
             const typeDocument = req.params.type
-            const documents = await this._documentService.getByType(typeDocument)
+            const documents = await this._documentService.getByType(typeDocument, take, page, skip)
 
             res.status(200).send(documents)
         } catch (err: any) {
