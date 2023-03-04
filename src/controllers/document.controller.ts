@@ -33,7 +33,8 @@ export class DocumentController {
         const skip = (page - 1) * take;
 
         try {
-            const typeDocument = req.params.type
+            const typeDocument = req.params.type.replace("-", "_");
+            
             const documents = await this._documentService.getByType(typeDocument, take, page, skip)
 
             res.status(200).send(documents)

@@ -8,11 +8,11 @@ import PostreSQL from '../database/postgresql';
 //Entity Routes
 import { DocumentRoutes } from '../routes/document.routes';
 //Controllers
-import { DocumentController, MovementController } from '../controllers';
+import { DocumentController, MovementController, DetailController } from '../controllers';
 //Services
-import { DocumentService, MovementService } from '../services';
+import { DocumentService, MovementService, DetailService } from '../services';
 //Repositories 
-import { DocumentRepository, MovementRepository } from '../repositories';
+import { DocumentRepository, MovementRepository, DetailRepository } from '../repositories';
 //Entities
 import {
   DetailEntity, DocumentEntity, DocumentSignatureEntity,
@@ -49,15 +49,18 @@ container
   })
   .register({
     DocumentService: asClass(DocumentService).singleton(),
-    MovementService: asClass(MovementService).singleton()
+    MovementService: asClass(MovementService).singleton(),
+    DetailService: asClass(DetailService).singleton()
   })
   .register({
     DocumentController: asClass(DocumentController).singleton(),
     MovementController: asClass(MovementController).singleton(),
+    DetailController: asClass(DetailController).singleton()
   })
   .register({
     DocumentRepository: asClass(DocumentRepository).singleton(),
     MovementRepository: asClass(MovementRepository).singleton(),
+    DetailRepository: asClass(DetailRepository).singleton()
   })
   .register({
     DocumentRoutes: asFunction(DocumentRoutes)

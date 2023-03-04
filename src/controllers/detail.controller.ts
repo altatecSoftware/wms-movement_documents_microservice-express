@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 
-export class MovementController {
-  private _movementService: any
+export class DetailController {
+  private _detailService: any
 
-  constructor({ MovementService }: any) {
-    this._movementService = MovementService
+  constructor({ DetailService }: any) {
+    this._detailService = DetailService
     this.create = this.create.bind(this)
   }
 
@@ -12,7 +12,7 @@ export class MovementController {
     try {
       const document_id = req.params.id
       const data = req.body
-      const movement = await this._movementService.create(data, document_id)
+      const movement = await this._detailService.create(data, document_id)
       res.status(200).send(movement)
     } catch (err: any) {
       res.status(500).send(err.message)

@@ -9,7 +9,7 @@ export class MovementRepository {
     this._movementEntity = MovementEntity
   }
 
-  public async newStatus(data: any, document_id: string) {
+  public async create(data: any, document_id: string) {
     const movementRepository = await this._myDataSource.getRepository(this._movementEntity)
 
     return await movementRepository.save({ ...data, document_id })

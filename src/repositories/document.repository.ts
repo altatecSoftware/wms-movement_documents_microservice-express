@@ -1,4 +1,3 @@
-import { IDetail, IDocument, IDocumentSignature, IInboundOrder, IMovement, IOutboundOrder } from "../interfaces"
 import { DocumentEntity, InboundOrderEntity, MovementEntity, OutboundOrderEntity } from "../entities"
 import { documentTypes } from "../utils"
 
@@ -7,14 +6,12 @@ export class DocumentRepository {
     private _documentEntity: DocumentEntity
     private _inboundOrderEntity: InboundOrderEntity
     private _outboundOrderEntity: OutboundOrderEntity
-    private _movementEntity: MovementEntity
 
-    constructor({ postgresql, DocumentEntity, InboundOrderEntity, OutboundOrderEntity, MovementEntity }) {
+    constructor({ postgresql, DocumentEntity, InboundOrderEntity, OutboundOrderEntity }) {
         this._myDataSource = postgresql
         this._documentEntity = DocumentEntity
         this._inboundOrderEntity = InboundOrderEntity
         this._outboundOrderEntity = OutboundOrderEntity
-        this._movementEntity = MovementEntity
     }
 
     public async getAll(take: number, skip: number) {
@@ -80,26 +77,19 @@ export class DocumentRepository {
         return document
     }
 
-    public async create(documentData: IDocument, inboundOrderData: IInboundOrder, outboundOrderData: IOutboundOrder,
-        detailData: IDetail[], movementData: IMovement[], documentSignatureData: IDocumentSignature[]) {
+    public async create(documentData: any) {
 
         const documentRepository = await this._myDataSource.getRepository(this._documentEntity)
         const entityDocument = await documentRepository.create(documentData)
-        const documentEntity = {
-            ...entityDocument, inbound_order: inboundOrderData, outbound_order: outboundOrderData,
-            details: detailData, movements: movementData, document_signatures: documentSignatureData
-        }
 
-        documentData.document_type === documentTypes.INBOUND_ORDER ? delete documentEntity.outbound_order : ''
-        documentData.document_type === documentTypes.OUTBOUND_ORDER ? delete documentEntity.inbound_order : ''
-
-        return await documentRepository.save(documentEntity)
+        return await documentRepository.save(entityDocument)
     }
 
-    public async update(document: any, data: any, id: string) {
+    public async update(documentData: any) {
         const documentRepository = await this._myDataSource.getRepository(this._documentEntity)
-        const newDocument = Object.assign(document, data)
-        return await documentRepository.save(newDocument);
+        const entityDocument = await documentRepository.create(documentData)
+
+        return await documentRepository.save(entityDocument)
     }
 
     public async delete(id: string) {
@@ -110,17 +100,11 @@ export class DocumentRepository {
         if (document.document_type === documentTypes.INBOUND_ORDER) {
             repositoryAux = await this._myDataSource.getRepository(this._inboundOrderEntity);
             documentAux = await repositoryAux.findOne({ where: { id: document.inbound_order.id } });
-        } else if (document.document_type === documentTypes.OUTBOUND_ORDER) {
+        } else if (document.document_type  === documentTypes.OUTBOUND_ORDER) {
             repositoryAux = await this._myDataSource.getRepository(this._outboundOrderEntity);
             documentAux = await repositoryAux.findOne({ where: { id: document.outbound_order.id } });
         }
 
         return await repositoryAux.remove(documentAux)
-    }
-
-    public async newStatus(data: any, document_id: string) {
-        const movementRepository = await this._myDataSource.getRepository(this._movementEntity)
-
-        return await movementRepository.save({ ...data, document_id })
     }
 }
