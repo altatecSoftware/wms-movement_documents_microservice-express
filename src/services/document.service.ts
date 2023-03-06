@@ -16,7 +16,7 @@ export class DocumentService {
 
     public async getAll(take: number, skip: number, page: number) {
         const documents = await this._documentRepository.getAll(take, skip)
-        
+
         return {
             status: "success",
             data: {
@@ -30,7 +30,7 @@ export class DocumentService {
 
     public async getByType(typeDocument: string, take: number, page: number, skip: number) {
         const documents = await this._documentRepository.getByType(typeDocument, take, skip)
-        
+
         return {
             status: "success",
             data: {
@@ -45,7 +45,7 @@ export class DocumentService {
     public async get(id: any) {
         const document = await this._documentRepository.get(id)
         if (!document) {
-            return { status: "success", message: "The document with the id: " + id +  " does not exist"}
+            return { status: "success", message: "The document with the id: " + id + " does not exist" }
         }
         return {
             status: "success",
@@ -78,12 +78,12 @@ export class DocumentService {
         const path = [{ path: "http://example.com" }]
         this._documentSignatures = path
 
-        data = {...this._document }
+        data = { ...this._document }
         switch (data.document_type) {
             case documentTypes.INBOUND_ORDER:
                 data.inbound_order = this._inboundOrder
                 break;
-            case documentTypes.OUTBOUND_ORDER: 
+            case documentTypes.OUTBOUND_ORDER:
                 data.outbound_order = this._outboundOrder
                 break;
         }
@@ -100,33 +100,22 @@ export class DocumentService {
     }
 
     public async update(body: any, id: string) {
-        let data: any = {}
-        const { inbound_order, outbound_order, details, ...dataDocument } = body
-
+        if (Object.entries(body).length === 0) {
+            return { status: "success", message: "No data to update" }
+        }
         const document = await this._documentRepository.get(id)
         if (!document) {
-            return { status: "success", message: "The document with the id: " + id +  " does not exist" }
+            return { status: "success", message: "The document with the id: " + id + " does not exist" }
         }
+        const updateDocument = this._createNewDocumentToUpdate(body, document)
 
-        data = dataDocument
-        details ? data.details = details : ''
-        switch (document.document_type) {
-            case documentTypes.INBOUND_ORDER:
-                inbound_order ? data.inbound_order = {...inbound_order} : ''
-                break;
-            case documentTypes.OUTBOUND_ORDER: 
-                outbound_order ? data.outbound_order = {...outbound_order} : ''
-                break;
-        }
-        data = Object.assign(document, data.inbound_order)
-        return data
-        return await this._documentRepository.update(data)
+        return await this._documentRepository.update(updateDocument)
     }
 
     public async delete(id: string) {
         const document = await this._documentRepository.get(id)
         if (!document) {
-            return { status: "success", message: "The document with the id: " + id +  " does not exist" }
+            return { status: "success", message: "The document with the id: " + id + " does not exist" }
         }
 
         await this._documentRepository.delete(id)
@@ -136,6 +125,27 @@ export class DocumentService {
         }
     }
 
+    private _createNewDocumentToUpdate({ inbound_order, outbound_order, details, ...dataDocument }: any, document: any): Object {
+        let newDocument: any = {}
+        let newInboundOrder: any = {}
+        let newOutboundOrder: any = {}
 
+        newInboundOrder = Object.assign({}, document.inbound_order, inbound_order)
+        newOutboundOrder = Object.assign({}, document.outbound_order, outbound_order)
+        newDocument = Object.assign({}, document, dataDocument)
+        newDocument.details = details
+
+        switch (document.document_type) {
+            case documentTypes.INBOUND_ORDER:
+                newDocument.inbound_order = newInboundOrder
+                break;
+        
+            case documentTypes.OUTBOUND_ORDER:
+                newDocument.outbound_order = newOutboundOrder
+                break;
+        }
+
+        return newDocument
+    }
 
 }

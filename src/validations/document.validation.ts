@@ -77,24 +77,24 @@ export const updateDocument = (): RequestHandler => {
             contact_id: Joi.string().guid().optional(),
             //Inbound/Outbound orders
             inbound_order: Joi.object().keys({
-                destination_warehouse_id: Joi.string().guid().optional(),
-                delivered_by: Joi.string().guid().optional(),
-                received_by: Joi.string().guid().optional(),
+                destination_warehouse_id: Joi.string().guid().required(),
+                delivered_by: Joi.string().guid().required(),
+                received_by: Joi.string().guid().required(),
             }).optional(),
             outbound_order: Joi.object().keys({
-                origin_warehouse_id: Joi.string().guid().optional(),
-                delivered_by: Joi.string().guid().optional(),
-                received_by: Joi.string().guid().optional(),
+                origin_warehouse_id: Joi.string().guid().required(),
+                delivered_by: Joi.string().guid().required(),
+                received_by: Joi.string().guid().required(),
             }).optional(),
             //Details
             details: Joi.array().items({
                 id: Joi.string().guid().required(),
-                unit_price: Joi.number().optional(),
-                total_price: Joi.number().optional(),
-                quantity: Joi.number().optional(),
-                pending_quantity: Joi.number().optional().default(0),
-                inventory_id: Joi.string().guid().optional(),
-                good_id: Joi.string().guid().optional()
+                unit_price: Joi.number().required(),
+                total_price: Joi.number().required(),
+                quantity: Joi.number().required(),
+                pending_quantity: Joi.number().required(),
+                inventory_id: Joi.string().guid().required(),
+                good_id: Joi.string().guid().required()
             }).optional()
         })
     })
